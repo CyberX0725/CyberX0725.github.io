@@ -156,3 +156,8 @@ desktop.ini
 
 # Trae documents (internal)
 .trae/
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
