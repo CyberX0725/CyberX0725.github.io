@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CyberX0725 的个人技术博客 — 探索代码的无限可能，分享技术、设计与开发的见解。">
+  <meta name="author" content="CyberX0725">
+  <meta name="keywords" content="CyberX0725,技术博客,编程,赛博朋克,前端开发">
+  <meta property="og:title" content="CyberX0725 — 赛博空间的技术探索">
+  <meta property="og:description" content="探索代码的无限可能，构建未来的数字世界。">
+  <meta property="og:type" content="website">
+  <title>CyberX0725 — 赛博空间的技术探索</title>
+  <link rel="icon" type="image/svg+xml" href="assets/images/avatar.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <div class="page-glow"></div>
+  <div class="page-glow secondary"></div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="index.html" class="navbar-logo"><span>CyberX</span>0725</a>
+      <button class="navbar-toggle" aria-label="菜单">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="navbar-links">
+        <li><a href="index.html">首页</a></li>
+        <li><a href="archive.html">归档</a></li>
+        <li><a href="about.html">关于</a></li>
+        <li><a href="https://github.com/CyberX0725" target="_blank" rel="noopener">GitHub</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <span class="hero-deco top-left">// SYSTEM ONLINE</span>
+      <span class="hero-deco bottom-right">// v1.0.0</span>
+      <div class="hero-content">
+        <span class="hero-tag"> Welcome to Cyber Space</span>
+        <h1 class="hero-title">
+          <span class="glitch" data-text="CyberX0725">CyberX0725</span>
+        </h1>
+        <p class="hero-subtitle">
+          <span class="typed-text"></span><span class="cursor"></span>
+        </p>
+        <div class="hero-actions">
+          <a href="#articles" class="btn">浏览文章</a>
+          <a href="about.html" class="btn btn-secondary">关于我</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Articles -->
+    <section class="section" id="articles">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-label">Featured</div>
+          <h2 class="section-title">精选文章</h2>
+          <p class="section-subtitle">最新的技术与思考，从这里开始。</p>
+        </div>
+        <div class="articles-grid" id="featured-articles">
+          <!-- Rendered by JavaScript -->
+        </div>
+
+        <div class="section-header reveal" style="margin-top: var(--space-xl);">
+          <div class="section-label">All Posts</div>
+          <h2 class="section-title">全部文章</h2>
+        </div>
+
+        <!-- Category Filter -->
+        <div class="category-filter reveal">
+          <button class="filter-btn active" data-category="all">全部</button>
+          <button class="filter-btn" data-category="随笔">随笔</button>
+          <button class="filter-btn" data-category="设计">设计</button>
+          <button class="filter-btn" data-category="教程">教程</button>
+        </div>
+
+        <div class="articles-grid" id="all-articles">
+          <!-- Rendered by JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Author Card -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-label">About Author</div>
+          <h2 class="section-title">关于博主</h2>
+        </div>
+        <div class="author-card reveal">
+          <div class="author-terminal-header">
+            <span class="terminal-dot red"></span>
+            <span class="terminal-dot yellow"></span>
+            <span class="terminal-dot green"></span>
+            <span class="terminal-title">~/cyberx0725 — bash</span>
+          </div>
+          <div class="author-body">
+            <div class="author-avatar">
+              <img src="assets/images/avatar.svg" alt="CyberX0725 头像">
+            </div>
+            <div class="author-info">
+              <h3>CyberX0725</h3>
+              <div class="author-handle">@cyberx0725</div>
+              <p class="author-bio">
+                热爱技术的探索者，专注于前端开发与设计美学。相信代码不仅是工具，更是表达创造力的语言。在赛博空间中，构建属于自己的数字世界。
+              </p>
+              <div class="author-socials">
+                <a href="https://github.com/CyberX0725" target="_blank" rel="noopener" class="social-link" aria-label="GitHub">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                </a>
+                <a href="mailto:3262525349@qq.com" class="social-link" aria-label="Email">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                </a>
+                <a href="archive.html" class="social-link" aria-label="Archive">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-text">
+          <span class="accent">$</span> Crafted with code by <span class="accent">CyberX0725</span> © 2026
+        </div>
+        <div class="footer-links">
+          <a href="index.html">首页</a>
+          <a href="archive.html">归档</a>
+          <a href="about.html">关于</a>
+          <a href="https://github.com/CyberX0725" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top -->
+  <button class="back-to-top" aria-label="返回顶部">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
+
+  <script src="assets/js/main.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="使用 GitHub Pages 部署静态网站的完整指南，从创建仓库到配置自定义域名，涵盖所有步骤。">
+  <meta name="author" content="CyberX0725">
+  <title>使用 GitHub Pages 部署静态网站完整指南 | CyberX0725</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/images/avatar.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+  <div class="page-glow"></div>
+  <div class="page-glow secondary"></div>
+
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="../index.html" class="navbar-logo"><span>CyberX</span>0725</a>
+      <button class="navbar-toggle" aria-label="菜单">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="navbar-links">
+        <li><a href="../index.html">首页</a></li>
+        <li><a href="../archive.html">归档</a></li>
+        <li><a href="../about.html">关于</a></li>
+        <li><a href="https://github.com/CyberX0725" target="_blank" rel="noopener">GitHub</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <div class="container container-narrow">
+      <article>
+        <header class="article-header">
+          <span class="article-category">教程</span>
+          <h1>使用 GitHub Pages 部署静态网站完整指南</h1>
+          <div class="article-header-meta">
+            <span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              2026.07.05
+            </span>
+            <span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              10 分钟阅读
+            </span>
+            <span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              CyberX0725
+            </span>
+          </div>
+        </header>
+
+        <div class="article-body">
+          <p>GitHub Pages 是 GitHub 提供的免费静态网站托管服务，非常适合部署个人博客、项目文档或作品集。本指南将从零开始，带你完成完整的部署流程。</p>
+
+          <h2>什么是 GitHub Pages？</h2>
+
+          <p>GitHub Pages 允许你直接从 GitHub 仓库托管静态网站，无需服务器、无需数据库、无需付费。每个 GitHub 账户可以拥有一个用户站点和无限个项目站点。</p>
+
+          <blockquote>用户站点访问地址格式：<code>https://&lt;username&gt;.github.io</code><br>项目站点访问地址格式：<code>https://&lt;username&gt;.github.io/&lt;repository&gt;</code></blockquote>
+
+          <h2>第一步：创建仓库</h2>
+
+          <p>对于用户站点，仓库必须命名为 <code>&lt;username&gt;.github.io</code>。例如，我的用户名是 <code>CyberX0725</code>，所以仓库名为 <code>CyberX0725.github.io</code>。</p>
+
+          <ol>
+            <li>登录 GitHub，点击右上角 <strong>+</strong> → <strong>New repository</strong></li>
+            <li>仓库名填入 <code>CyberX0725.github.io</code>（替换为你的用户名）</li>
+            <li>选择 <strong>Public</strong>（公开）</li>
+            <li>勾选 <strong>Add a README file</strong></li>
+            <li>点击 <strong>Create repository</strong></li>
+          </ol>
+
+          <h2>第二步：初始化本地项目</h2>
+
+          <p>将远程仓库克隆到本地，然后添加你的网站文件：</p>
+
+          <pre><code># 克隆仓库
+git clone https://github.com/CyberX0725/CyberX0725.github.io.git
+
+# 进入目录
+cd CyberX0725.github.io
+
+# 创建项目结构
+mkdir -p assets/css assets/js assets/images posts
+
+# 添加你的 HTML、CSS、JS 文件
+# ...</code></pre>
+
+          <p>一个典型的项目结构如下：</p>
+
+          <pre><code>CyberX0725.github.io/
+├── index.html
+├── about.html
+├── archive.html
+├── 404.html
+├── assets/
+│   ├── css/
+│   │   └── style.css
+│   ├── js/
+│   │   └── main.js
+│   └── images/
+│       └── avatar.svg
+├── posts/
+│   ├── hello-world.html
+│   └── ...
+└── README.md</code></pre>
+
+          <h2>第三步：推送到 GitHub</h2>
+
+          <p>将文件添加到 Git 并推送到远程仓库：</p>
+
+          <pre><code># 添加所有文件
+git add .
+
+# 提交更改
+git commit -m "Initial blog setup"
+
+# 推送到 GitHub
+git push origin main</code></pre>
+
+          <blockquote>注意：如果你的默认分支是 <code>master</code> 而非 <code>main</code>，请相应调整命令。GitHub 现在默认使用 <code>main</code> 作为主分支名。</blockquote>
+
+          <h2>第四步：启用 GitHub Pages</h2>
+
+          <p>对于用户站点（<code>&lt;username&gt;.github.io</code> 仓库），推送代码后 GitHub Pages 会<strong>自动启用</strong>。对于项目站点，需要手动开启：</p>
+
+          <ol>
+            <li>进入仓库的 <strong>Settings</strong> 选项卡</li>
+            <li>在左侧菜单找到 <strong>Pages</strong></li>
+            <li>在 <strong>Source</strong> 下拉菜单中选择分支（通常是 <code>main</code>）</li>
+            <li>选择根目录 <code>/ (root)</code></li>
+            <li>点击 <strong>Save</strong></li>
+          </ol>
+
+          <p>等待 1-2 分钟，你的网站就会在 <code>https://cyberx0725.github.io</code> 上线。</p>
+
+          <h2>第五步：配置 Git 用户信息</h2>
+
+          <p>如果你是第一次使用 Git，需要配置用户信息：</p>
+
+          <pre><code>git config --global user.name "CyberX0725"
+git config --global user.email "3262525349@qq.com"</code></pre>
+
+          <h2>进阶：配置自定义域名</h2>
+
+          <p>如果你有自己的域名，可以配置为 GitHub Pages 的自定义域名：</p>
+
+          <ol>
+            <li>在仓库根目录创建 <code>CNAME</code> 文件（无扩展名）</li>
+            <li>文件内容只写你的域名，例如 <code>blog.cyberx0725.com</code></li>
+            <li>在你的域名 DNS 设置中添加 CNAME 记录，指向 <code>cyberx0725.github.io</code></li>
+            <li>等待 DNS 生效（可能需要几小时）</li>
+          </ol>
+
+          <pre><code># CNAME 文件内容
+blog.cyberx0725.com</code></pre>
+
+          <h2>进阶：使用 GitHub Actions 自动部署</h2>
+
+          <p>如果你使用构建工具（如 Vite、Webpack），可以配置 GitHub Actions 自动构建并部署：</p>
+
+          <pre><code># .github/workflows/deploy.yml
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - name: Install dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist</code></pre>
+
+          <h2>常见问题</h2>
+
+          <h3>网站显示 404？</h3>
+
+          <ul>
+            <li>确认仓库名正确：<code>&lt;username&gt;.github.io</code></li>
+            <li>确认仓库是 <strong>Public</strong>（免费账户仅支持公开仓库）</li>
+            <li>确认 <code>index.html</code> 在仓库根目录</li>
+            <li>等待 1-2 分钟让部署完成</li>
+          </ul>
+
+          <h3>资源加载失败（404）？</h3>
+
+          <p>检查文件路径。对于项目站点（非用户站点），资源路径需要包含仓库名：</p>
+
+          <pre><code>&lt;!-- 用户站点可用相对路径 --&gt;
+&lt;link rel="stylesheet" href="assets/css/style.css"&gt;
+
+&lt;!-- 项目站点需要绝对路径 --&gt;
+&lt;link rel="stylesheet" href="/repository-name/assets/css/style.css"&gt;</code></pre>
+
+          <h3>HTTPS 证书未生效？</h3>
+
+          <p>在 Settings → Pages 中勾选 <strong>Enforce HTTPS</strong>。首次启用可能需要等待几分钟到几小时。</p>
+
+          <h2>总结</h2>
+
+          <p>GitHub Pages 是部署静态网站的绝佳选择——免费、简单、与 Git 工作流无缝集成。无论是个人博客、项目文档还是在线简历，都可以在几分钟内上线。</p>
+
+          <blockquote>最好的部署方式是最简单的方式。不要为了部署而部署，把精力放在内容上。</blockquote>
+
+          <p>现在，去创造属于你的数字空间吧。</p>
+        </div>
+
+        <nav class="article-nav">
+          <a href="cyberpunk-design.html" class="article-nav-item">
+            <div class="article-nav-label">← 上一篇</div>
+            <div class="article-nav-title">赛博朋克设计美学：在网页中构建未来感</div>
+          </a>
+          <a href="../archive.html" class="article-nav-item next">
+            <div class="article-nav-label">查看更多 →</div>
+            <div class="article-nav-title">返回归档</div>
+          </a>
+        </nav>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-text">
+          <span class="accent">$</span> Crafted with code by <span class="accent">CyberX0725</span> © 2026
+        </div>
+        <div class="footer-links">
+          <a href="../index.html">首页</a>
+          <a href="../archive.html">归档</a>
+          <a href="../about.html">关于</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <button class="back-to-top" aria-label="返回顶部">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
+
+  <script src="../assets/js/main.js" defer></script>
+</body>
+</html>

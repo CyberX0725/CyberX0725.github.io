@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0e1a"/>
+      <stop offset="100%" style="stop-color:#1a2138"/>
+    </linearGradient>
+    <linearGradient id="neonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00ffd1"/>
+      <stop offset="100%" style="stop-color:#ff2e88"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Background -->
+  <rect width="200" height="200" fill="url(#bgGrad)"/>
+  <!-- Grid pattern -->
+  <g stroke="#00ffd1" stroke-width="0.5" opacity="0.15">
+    <line x1="0" y1="40" x2="200" y2="40"/>
+    <line x1="0" y1="80" x2="200" y2="80"/>
+    <line x1="0" y1="120" x2="200" y2="120"/>
+    <line x1="0" y1="160" x2="200" y2="160"/>
+    <line x1="40" y1="0" x2="40" y2="200"/>
+    <line x1="80" y1="0" x2="80" y2="200"/>
+    <line x1="120" y1="0" x2="120" y2="200"/>
+    <line x1="160" y1="0" x2="160" y2="200"/>
+  </g>
+  <!-- Hexagon frame -->
+  <polygon points="100,20 165,55 165,145 100,180 35,145 35,55" fill="none" stroke="url(#neonGrad)" stroke-width="2" filter="url(#glow)"/>
+  <!-- Inner hexagon -->
+  <polygon points="100,35 150,62 150,138 100,165 50,138 50,62" fill="none" stroke="#00ffd1" stroke-width="1" opacity="0.4"/>
+  <!-- Avatar figure: stylized hacker -->
+  <!-- Head -->
+  <circle cx="100" cy="85" r="22" fill="none" stroke="#00ffd1" stroke-width="2" filter="url(#glow)"/>
+  <!-- Helmet/Cyber visor -->
+  <path d="M 78 82 Q 100 72 122 82 L 122 88 Q 100 78 78 88 Z" fill="#00ffd1" opacity="0.8"/>
+  <!-- Eyes (LED style) -->
+  <circle cx="91" cy="85" r="2.5" fill="#ff2e88" filter="url(#glow)"/>
+  <circle cx="109" cy="85" r="2.5" fill="#ff2e88" filter="url(#glow)"/>
+  <!-- Body/Shoulders -->
+  <path d="M 70 120 Q 70 108 85 105 L 115 105 Q 130 108 130 120 L 135 140 Q 100 150 65 140 Z" fill="none" stroke="url(#neonGrad)" stroke-width="2" filter="url(#glow)"/>
+  <!-- Circuit details on body -->
+  <line x1="85" y1="115" x2="85" y2="130" stroke="#00ffd1" stroke-width="1" opacity="0.6"/>
+  <line x1="100" y1="112" x2="100" y2="135" stroke="#ff2e88" stroke-width="1" opacity="0.6"/>
+  <line x1="115" y1="115" x2="115" y2="130" stroke="#00ffd1" stroke-width="1" opacity="0.6"/>
+  <circle cx="85" cy="130" r="1.5" fill="#00ffd1"/>
+  <circle cx="100" cy="135" r="1.5" fill="#ff2e88"/>
+  <circle cx="115" cy="130" r="1.5" fill="#00ffd1"/>
+  <!-- Decorative corner brackets -->
+  <path d="M 10 10 L 10 25 M 10 10 L 25 10" stroke="#00ffd1" stroke-width="2" fill="none"/>
+  <path d="M 190 10 L 190 25 M 190 10 L 175 10" stroke="#00ffd1" stroke-width="2" fill="none"/>
+  <path d="M 10 190 L 10 175 M 10 190 L 25 190" stroke="#ff2e88" stroke-width="2" fill="none"/>
+  <path d="M 190 190 L 190 175 M 190 190 L 175 190" stroke="#ff2e88" stroke-width="2" fill="none"/>
+</svg>

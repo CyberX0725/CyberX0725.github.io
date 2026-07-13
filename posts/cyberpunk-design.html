@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="赛博朋克设计美学：探索霓虹色彩、故障艺术、扫描线效果，以及如何用纯 CSS 实现这些视觉效果。">
+  <meta name="author" content="CyberX0725">
+  <title>赛博朋克设计美学：在网页中构建未来感 | CyberX0725</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/images/avatar.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+  <div class="page-glow"></div>
+  <div class="page-glow secondary"></div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="../index.html" class="navbar-logo"><span>CyberX</span>0725</a>
+      <button class="navbar-toggle" aria-label="菜单">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="navbar-links">
+        <li><a href="../index.html">首页</a></li>
+        <li><a href="../archive.html">归档</a></li>
+        <li><a href="../about.html">关于</a></li>
+        <li><a href="https://github.com/CyberX0725" target="_blank" rel="noopener">GitHub</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <div class="container container-narrow">
+      <article>
+        <header class="article-header">
+          <span class="article-category">设计</span>
+          <h1>赛博朋克设计美学：在网页中构建未来感</h1>
+          <div class="article-header-meta">
+            <span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              2026.07.10
+            </span>
+            <span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              7 分钟阅读
+            </span>
+            <span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              CyberX0725
+            </span>
+          </div>
+        </header>
+
+        <div class="article-body">
+          <p>赛博朋克不仅仅是一种科幻流派，它已经成为一种独特的视觉美学——霓虹灯、暗色基调、故障艺术、终端界面。在这篇文章中，我们将探索如何用纯 CSS 在网页中重现这种未来感。</p>
+
+          <h2>核心视觉元素</h2>
+
+          <p>赛博朋克设计风格有几个标志性的视觉元素，掌握它们就抓住了这种美学的灵魂。</p>
+
+          <h3>1. 霓虹色彩体系</h3>
+
+          <p>传统的配色讲究和谐与平衡，而赛博朋克则追求<strong>高对比度</strong>与<strong>发光效果</strong>。经典的配色方案是深邃的暗色背景搭配鲜艳的霓虹强调色。</p>
+
+          <pre><code>:root {
+  --bg-primary: #0a0e1a;    /* 深邃黑色背景 */
+  --neon-cyan: #00ffd1;     /* 霓虹青色 */
+  --neon-pink: #ff2e88;     /* 霓虹粉色 */
+  --text-primary: #e2e8f0;  /* 高对比文字 */
+}
+
+/* 发光效果 */
+.neon-text {
+  color: var(--neon-cyan);
+  text-shadow: 
+    0 0 10px rgba(0, 255, 209, 0.5),
+    0 0 20px rgba(0, 255, 209, 0.3),
+    0 0 40px rgba(0, 255, 209, 0.1);
+}</code></pre>
+
+          <p>关键在于使用 <code>text-shadow</code> 和 <code>box-shadow</code> 的多层叠加来模拟霓虹灯的辉光效果。一层不够，两层不够，至少三层才能营造出真实的光晕扩散感。</p>
+
+          <h3>2. 故障艺术 (Glitch Art)</h3>
+
+          <p>故障艺术利用 RGB 通道分离和位移，创造出"信号干扰"的视觉效果。这是赛博朋克设计中最具辨识度的元素之一。</p>
+
+          <pre><code>.glitch {
+  position: relative;
+  color: #ffffff;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch::before {
+  color: #00ffd1;
+  animation: glitch-1 3s infinite;
+  clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+}
+
+.glitch::after {
+  color: #ff2e88;
+  animation: glitch-2 3s infinite;
+  clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+}
+
+@keyframes glitch-1 {
+  0%, 100% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+}</code></pre>
+
+          <blockquote>技巧在于使用 <code>clip-path</code> 将伪元素裁剪为上下两半，配合不同的颜色和位移动画，模拟出 RGB 通道错位的效果。</blockquote>
+
+          <h3>3. 扫描线效果</h3>
+
+          <p>老式 CRT 显示器的扫描线是赛博朋克设计的另一标志。用 CSS 实现非常简单：</p>
+
+          <pre><code>body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.03) 2px,
+    rgba(0, 0, 0, 0.03) 4px
+  );
+  pointer-events: none;
+  z-index: 1;
+}</code></pre>
+
+          <p>关键点：<code>pointer-events: none</code> 确保叠加层不会影响交互，<code>z-index</code> 控制层级让扫描线覆盖在内容之上但不遮挡。</p>
+
+          <h3>4. 网格背景</h3>
+
+          <p>网格背景营造出"数字空间"的氛围感，让人联想到 Tron 中的虚拟世界。</p>
+
+          <pre><code>body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image:
+    linear-gradient(rgba(0, 255, 209, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 209, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  pointer-events: none;
+}</code></pre>
+
+          <h2>几何切角设计</h2>
+
+          <p>赛博朋克设计中，元素往往不是规则的矩形，而是带有切角的多边形。这可以用 <code>clip-path</code> 实现：</p>
+
+          <pre><code>.cyber-button {
+  clip-path: polygon(
+    0 0,
+    calc(100% - 12px) 0,
+    100% 12px,
+    100% 100%,
+    12px 100%,
+    0 calc(100% - 12px)
+  );
+}</code></pre>
+
+          <p>这种切角设计让按钮和卡片看起来像未来世界的界面元素，而不是普通的网页组件。</p>
+
+          <h2>字体选择</h2>
+
+          <p>字体是赛博朋克设计中至关重要的一环。<strong>等宽字体</strong>是首选，因为它们让人联想到终端、代码和机器。</p>
+
+          <ul>
+            <li><strong>JetBrains Mono</strong> — 优雅的编程字体，适合标题与界面元素</li>
+            <li><strong>Fira Code</strong> — 支持连字，代码感强烈</li>
+            <li><strong>Space Mono</strong> — 复古感与未来感的完美结合</li>
+          </ul>
+
+          <p>正文则推荐使用易读的无衬线字体，如 <strong>Noto Sans SC</strong>，确保大段文字的阅读舒适度。</p>
+
+          <h2>动效与交互</h2>
+
+          <p>赛博朋克设计中的动效应该让人感觉"有生命力"。几个关键技巧：</p>
+
+          <ol>
+            <li><strong>打字机效果</strong> — 用 JavaScript 实现文字逐字显示，配合光标闪烁</li>
+            <li><strong>滚动显现</strong> — 使用 Intersection Observer 触发元素动画</li>
+            <li><strong>悬停辉光</strong> — 卡片悬停时边框发光、背景微亮</li>
+            <li><strong>错落入场</strong> — 使用 <code>transition-delay</code> 让元素依次出现</li>
+          </ol>
+
+          <h2>总结</h2>
+
+          <p>赛博朋克设计美学的核心在于<strong>对比</strong>与<strong>氛围</strong>：暗与亮的对比、冷与暖的对比、规则与故障的对比。当你把这些元素组合在一起，就能创造出一个让人沉浸的数字世界。</p>
+
+          <blockquote>设计不是装饰，而是叙事。每一个像素都在讲述故事——关于未来、关于技术、关于人与机器的边界。</blockquote>
+
+          <p>希望这篇文章能给你带来灵感。下一个赛博杰作，由你创造。</p>
+        </div>
+
+        <nav class="article-nav">
+          <a href="hello-world.html" class="article-nav-item">
+            <div class="article-nav-label">← 上一篇</div>
+            <div class="article-nav-title">Hello World — 开启赛博之旅</div>
+          </a>
+          <a href="git-deploy.html" class="article-nav-item next">
+            <div class="article-nav-label">下一篇 →</div>
+            <div class="article-nav-title">使用 GitHub Pages 部署静态网站完整指南</div>
+          </a>
+        </nav>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-text">
+          <span class="accent">$</span> Crafted with code by <span class="accent">CyberX0725</span> © 2026
+        </div>
+        <div class="footer-links">
+          <a href="../index.html">首页</a>
+          <a href="../archive.html">归档</a>
+          <a href="../about.html">关于</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <button class="back-to-top" aria-label="返回顶部">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
+
+  <script src="../assets/js/main.js" defer></script>
+</body>
+</html>
