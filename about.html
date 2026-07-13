@@ -3,202 +3,183 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="关于 CyberX0725 — 技术探索者，专注于前端开发与设计美学。了解我的故事、技能与联系方式。">
-  <meta name="author" content="CyberX0725">
+  <meta name="description" content="关于 CyberX0725 — 技术探索者，专注于前端开发与设计美学。">
   <title>关于 | CyberX0725</title>
   <link rel="icon" type="image/svg+xml" href="assets/images/avatar.svg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-  <div class="page-glow"></div>
-  <div class="page-glow secondary"></div>
+  <button class="sidebar-toggle" aria-label="菜单">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
 
-  <nav class="navbar">
-    <div class="navbar-inner">
-      <a href="index.html" class="navbar-logo"><span>CyberX</span>0725</a>
-      <button class="navbar-toggle" aria-label="菜单">
-        <span></span><span></span><span></span>
-      </button>
-      <ul class="navbar-links">
-        <li><a href="index.html">首页</a></li>
-        <li><a href="archive.html">归档</a></li>
-        <li><a href="about.html">关于</a></li>
-        <li><a href="https://github.com/CyberX0725" target="_blank" rel="noopener">GitHub</a></li>
-      </ul>
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <a href="index.html"><span>CyberX</span>0725</a>
     </div>
-  </nav>
+    <ul class="sidebar-nav">
+      <li>
+        <a href="index.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          首页
+        </a>
+      </li>
+      <li>
+        <a href="archive.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+          归档
+        </a>
+      </li>
+      <li>
+        <a href="about.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          关于
+        </a>
+      </li>
+      <li>
+        <a href="https://github.com/CyberX0725" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub
+        </a>
+      </li>
+    </ul>
+    <div class="sidebar-footer">© 2026 CyberX0725</div>
+  </aside>
 
-  <main>
-    <div class="container">
-      <section class="section" style="padding-top: var(--space-xl);">
-        <div class="section-header reveal">
-          <div class="section-label">About Me</div>
-          <h1 class="section-title">关于 CyberX0725</h1>
-          <p class="section-subtitle">在比特与字节间穿行的探索者，用代码书写故事的人。</p>
-        </div>
-
-        <div class="about-grid">
-          <div class="about-avatar reveal">
-            <img src="assets/images/avatar.svg" alt="CyberX0725">
-          </div>
-          <div class="about-content reveal">
-            <h2>你好，我是 CyberX0725</h2>
-            <p>一个热爱技术的探索者，专注于前端开发与设计美学。我相信代码不仅是解决问题的工具，更是表达创造力的语言。</p>
-            <p>白天写代码，晚上做设计。在赛博空间中，我构建属于自己的数字世界。这个博客就是我的实验室——记录探索、分享发现、连接同好。</p>
-            <p>我对技术的热情源于一个简单的信念：<em>技术应该有温度，代码应该有灵魂。</em>每一个像素的摆放、每一行代码的书写，都是在创造体验、传递情感。</p>
-            <p>除了编程，我也热爱阅读、音乐和科幻电影。赛博朋克文化对我影响深远——它不仅是视觉风格，更是一种思考方式：在技术的冰冷中寻找人性的温度。</p>
-          </div>
-        </div>
-
-        <!-- Skills Section -->
-        <div class="section-header reveal" style="margin-top: var(--space-xl);">
-          <div class="section-label">Skills</div>
-          <h2 class="section-title">技术栈</h2>
-          <p class="section-subtitle">我使用过的工具与技术。</p>
-        </div>
-
-        <div class="skills-grid">
-          <div class="skill-item reveal">
-            <div class="skill-name">
-              <span>HTML5 / CSS3</span>
-              <span>95%</span>
-            </div>
-            <div class="skill-bar">
-              <div class="skill-progress" data-progress="95"></div>
-            </div>
-          </div>
-          <div class="skill-item reveal">
-            <div class="skill-name">
-              <span>JavaScript / ES6+</span>
-              <span>90%</span>
-            </div>
-            <div class="skill-bar">
-              <div class="skill-progress" data-progress="90"></div>
-            </div>
-          </div>
-          <div class="skill-item reveal">
-            <div class="skill-name">
-              <span>React / Vue</span>
-              <span>85%</span>
-            </div>
-            <div class="skill-bar">
-              <div class="skill-progress" data-progress="85"></div>
-            </div>
-          </div>
-          <div class="skill-item reveal">
-            <div class="skill-name">
-              <span>TypeScript</span>
-              <span>80%</span>
-            </div>
-            <div class="skill-bar">
-              <div class="skill-progress" data-progress="80"></div>
-            </div>
-          </div>
-          <div class="skill-item reveal">
-            <div class="skill-name">
-              <span>Node.js</span>
-              <span>75%</span>
-            </div>
-            <div class="skill-bar">
-              <div class="skill-progress" data-progress="75"></div>
-            </div>
-          </div>
-          <div class="skill-item reveal">
-            <div class="skill-name">
-              <span>UI / UX Design</span>
-              <span>82%</span>
-            </div>
-            <div class="skill-bar">
-              <div class="skill-progress" data-progress="82"></div>
-            </div>
-          </div>
-          <div class="skill-item reveal">
-            <div class="skill-name">
-              <span>Git / GitHub</span>
-              <span>88%</span>
-            </div>
-            <div class="skill-bar">
-              <div class="skill-progress" data-progress="88"></div>
-            </div>
-          </div>
-          <div class="skill-item reveal">
-            <div class="skill-name">
-              <span>Python</span>
-              <span>70%</span>
-            </div>
-            <div class="skill-bar">
-              <div class="skill-progress" data-progress="70"></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Contact Section -->
-        <div class="section-header reveal" style="margin-top: var(--space-xl);">
-          <div class="section-label">Contact</div>
-          <h2 class="section-title">保持联系</h2>
-          <p class="section-subtitle">想交流技术、合作项目，或只是打个招呼？随时联系我。</p>
-        </div>
-
-        <div class="contact-grid">
-          <a href="mailto:3262525349@qq.com" class="contact-item reveal" style="text-decoration:none;color:inherit;">
-            <div class="contact-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            </div>
-            <div>
-              <div class="contact-info-label">Email</div>
-              <div class="contact-info-value">3262525349@qq.com</div>
-            </div>
-          </a>
-          <a href="https://github.com/CyberX0725" target="_blank" rel="noopener" class="contact-item reveal" style="text-decoration:none;color:inherit;">
-            <div class="contact-icon">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-            </div>
-            <div>
-              <div class="contact-info-label">GitHub</div>
-              <div class="contact-info-value">@CyberX0725</div>
-            </div>
-          </a>
-          <a href="archive.html" class="contact-item reveal" style="text-decoration:none;color:inherit;">
-            <div class="contact-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
-            </div>
-            <div>
-              <div class="contact-info-label">Blog</div>
-              <div class="contact-info-value">查看所有文章</div>
-            </div>
-          </a>
-          <div class="contact-item reveal">
-            <div class="contact-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-            </div>
-            <div>
-              <div class="contact-info-label">Status</div>
-              <div class="contact-info-value">在线，欢迎交流</div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
-  </main>
-
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-inner">
-        <div class="footer-text">
-          <span class="accent">$</span> Crafted with code by <span class="accent">CyberX0725</span> © 2026
-        </div>
-        <div class="footer-links">
-          <a href="index.html">首页</a>
-          <a href="archive.html">归档</a>
-          <a href="about.html">关于</a>
-          <a href="https://github.com/CyberX0725" target="_blank" rel="noopener">GitHub</a>
+  <div class="main-wrapper">
+    <header class="header">
+      <div class="header-search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" placeholder="搜索文章...">
+      </div>
+      <div class="header-actions">
+        <div class="header-user">
+          <div class="header-avatar">C</div>
+          <span class="header-username">CyberX0725</span>
         </div>
       </div>
-    </div>
-  </footer>
+    </header>
+
+    <main class="content">
+      <h1 class="page-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        关于博主
+      </h1>
+
+      <!-- Profile Card -->
+      <div class="card about-section">
+        <div class="card-body">
+          <div class="about-header">
+            <div class="about-avatar">C</div>
+            <div class="about-info">
+              <h2>CyberX0725</h2>
+              <p>前端开发者 / 设计爱好者 / 技术探索者</p>
+            </div>
+          </div>
+          <p>你好，我是 CyberX0725，一个热爱技术的探索者，专注于前端开发与设计美学。我相信代码不仅是解决问题的工具，更是表达创造力的语言。</p>
+          <p>白天写代码，晚上做设计。这个博客就是我的实验室——记录探索、分享发现、连接同好。我对技术的热情源于一个简单的信念：<em>技术应该有温度，代码应该有灵魂</em>。</p>
+          <p>除了编程，我也热爱阅读、音乐和科幻电影。如果你也对技术充满热情，欢迎一起探索这个无限可能的数字世界。</p>
+        </div>
+      </div>
+
+      <!-- Skills Card -->
+      <div class="card about-section">
+        <div class="card-header">
+          <div class="card-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+            技术栈
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="skills-grid">
+            <div class="skill-item">
+              <div class="skill-name"><span>HTML5 / CSS3</span><span>95%</span></div>
+              <div class="skill-bar"><div class="skill-progress" data-progress="95"></div></div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-name"><span>JavaScript / ES6+</span><span>90%</span></div>
+              <div class="skill-bar"><div class="skill-progress" data-progress="90"></div></div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-name"><span>React / Vue</span><span>85%</span></div>
+              <div class="skill-bar"><div class="skill-progress" data-progress="85"></div></div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-name"><span>TypeScript</span><span>80%</span></div>
+              <div class="skill-bar"><div class="skill-progress" data-progress="80"></div></div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-name"><span>Node.js</span><span>75%</span></div>
+              <div class="skill-bar"><div class="skill-progress" data-progress="75"></div></div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-name"><span>UI / UX Design</span><span>82%</span></div>
+              <div class="skill-bar"><div class="skill-progress" data-progress="82"></div></div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-name"><span>Git / GitHub</span><span>88%</span></div>
+              <div class="skill-bar"><div class="skill-progress" data-progress="88"></div></div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-name"><span>Python</span><span>70%</span></div>
+              <div class="skill-bar"><div class="skill-progress" data-progress="70"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Card -->
+      <div class="card about-section">
+        <div class="card-header">
+          <div class="card-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            保持联系
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="contact-grid">
+            <a href="mailto:3262525349@qq.com" class="contact-item">
+              <div class="contact-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              </div>
+              <div>
+                <div class="contact-info-label">Email</div>
+                <div class="contact-info-value">3262525349@qq.com</div>
+              </div>
+            </a>
+            <a href="https://github.com/CyberX0725" target="_blank" rel="noopener" class="contact-item">
+              <div class="contact-icon">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+              </div>
+              <div>
+                <div class="contact-info-label">GitHub</div>
+                <div class="contact-info-value">@CyberX0725</div>
+              </div>
+            </a>
+            <a href="archive.html" class="contact-item">
+              <div class="contact-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+              </div>
+              <div>
+                <div class="contact-info-label">Blog</div>
+                <div class="contact-info-value">查看所有文章</div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div>
+        Copyright © 2026 CyberX0725. All rights reserved.
+        <a href="index.html">首页</a>|
+        <a href="archive.html">归档</a>|
+        <a href="about.html">关于</a>|
+        <a href="https://github.com/CyberX0725" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </footer>
+  </div>
 
   <button class="back-to-top" aria-label="返回顶部">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
