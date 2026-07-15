@@ -1,29 +1,49 @@
 import type { BackgroundWallpaperConfig } from "@/types/backgroundWallpaper";
 
 export const backgroundWallpaper: BackgroundWallpaperConfig = {
-	// 壁纸模式："banner" 横幅壁纸，"fullscreen" 全屏壁纸，"overlay" 全屏透明，"none" 纯色背景无壁纸
-	mode: "none",
-	// 是否允许用户通过导航栏切换壁纸模式
-	switchable: false,
-	// 是否启用背景视频播放
-	playerEnable: false,
+	mode: "banner",
+	switchable: true,
+	playerEnable: true,
 	src: {
-		desktop: [],
-		mobile: [],
-		playerUrl: [],
+		desktop: [
+			"assets/images/DesktopWallpaper/d1.avif",
+			"assets/images/DesktopWallpaper/d2.avif",
+			"assets/images/DesktopWallpaper/d3.avif",
+			"assets/images/DesktopWallpaper/d4.avif",
+			"assets/images/DesktopWallpaper/d5.avif",
+			"assets/images/DesktopWallpaper/d6.avif",
+		],
+		mobile: [
+			"assets/images/MobileWallpaper/m1.avif",
+			"assets/images/MobileWallpaper/m2.avif",
+			"assets/images/MobileWallpaper/m3.avif",
+			"assets/images/MobileWallpaper/m4.avif",
+			"assets/images/MobileWallpaper/m5.avif",
+			"assets/images/MobileWallpaper/m6.avif",
+		],
+		playerUrl: [
+			"https://www.image2url.com/r2/default/videos/1781765166391-f2ba6648-1597-40e0-9f0a-6768ae39e574.mp4",
+		],
 	},
 	common: {
-		dimOpacity: 0,
+		dimOpacity: 0.2,
 		playerMode: "random",
 		homeText: {
-			enable: false,
-			switchable: false,
-			title: "",
+			enable: true,
+			switchable: true,
+			title: "Lovely firefly!",
 			titleSize: "3.8rem",
-			subtitle: [],
+			subtitle: [
+				"In Reddened Chrysalis, I Once Rest",
+				"From Shattered Sky, I Free Fall",
+				"Amidst Silenced Stars, I Deep Sleep",
+				"Upon Lighted Fyrefly, I Soon Gaze",
+				"From Undreamt Night, I Thence Shine",
+				"In Finalized Morrow, I Full Bloom",
+			],
 			subtitleSize: "1.5rem",
 			typewriter: {
-				enable: false,
+				enable: true,
 				speed: 100,
 				deleteSpeed: 50,
 				pauseTime: 2000,
@@ -31,44 +51,44 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 		},
 		navbar: {
 			transparentMode: "semi",
-			enableBlur: false,
-			blur: 0,
+			enableBlur: true,
+			blur: 5,
 		},
 		waves: {
 			enable: {
-				desktop: false,
-				mobile: false,
+				desktop: true,
+				mobile: true,
 			},
-			switchable: false,
+			switchable: true,
 		},
 		gradient: {
 			enable: {
-				desktop: false,
-				mobile: false,
+				desktop: true,
+				mobile: true,
 			},
 			height: "10%",
-			switchable: false,
+			switchable: true,
 		},
 		carousel: {
 			enable: false,
 			interval: 5000,
 			transitionEffect: "zoom",
-			switchable: false,
+			switchable: true,
 		},
 	},
 	banner: {
-		position: "center",
+		position: "0% 20%",
 	},
 	overlay: {
 		switchable: {
-			opacity: false,
-			blur: false,
-			cardOpacity: false,
+			opacity: true,
+			blur: true,
+			cardOpacity: true,
 		},
 		zIndex: -1,
-		opacity: 0,
-		blur: 0,
-		cardOpacity: 1,
+		opacity: 0.8,
+		blur: 10,
+		cardOpacity: 0.5,
 	},
 	fullscreen: {
 		position: "center",

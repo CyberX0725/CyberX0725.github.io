@@ -157,6 +157,9 @@ if (isLocalSrcLogo) {
                         <Icon is:inline name="material-symbols:music-note-rounded" class="text-[1.25rem]"></Icon>
                     </button>
                 )}
+                <a href={url('/dashboard/')} aria-label="仪表盘" class="btn-plain scale-animation rounded-lg h-9 w-9 md:h-11 md:w-11 active:scale-90">
+                    <Icon is:inline name="material-symbols:dashboard" class="text-[1.25rem]"></Icon>
+                </a>
                 {backgroundWallpaper.playerEnable && backgroundWallpaper.mode !== "none" && (
                     <button
                         aria-label={i18n(I18nKey.videoPlay)}

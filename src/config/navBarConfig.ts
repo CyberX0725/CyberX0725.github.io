@@ -10,16 +10,7 @@ import {
 // NavBar Configuration - Dynamically generate navigation bar links based on order
 // ============================================================================
 const getDynamicNavBarConfig = (): NavBarConfig => {
-	// 基础导航栏链接
 	const links: NavBarLink[] = [
-		// 仪表盘
-		{
-			name: "仪表盘",
-			url: "/dashboard/",
-			icon: "material-symbols:dashboard",
-			pageKey: "dashboard",
-		},
-		// 主页
 		LinkPresets.Home,
 	];
 
