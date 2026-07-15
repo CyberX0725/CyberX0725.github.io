@@ -12,6 +12,13 @@ import {
 const getDynamicNavBarConfig = (): NavBarConfig => {
 	// 基础导航栏链接
 	const links: NavBarLink[] = [
+		// 仪表盘
+		{
+			name: "仪表盘",
+			url: "/dashboard/",
+			icon: "material-symbols:dashboard",
+			pageKey: "dashboard",
+		},
 		// 主页
 		LinkPresets.Home,
 	];
@@ -33,95 +40,36 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 		],
 	});
 
-	// 动态
-	links.push(LinkPresets.Dynamic);
-
-	//社交及其子菜单
+	// 工具及其子菜单
 	links.push({
-		name: "社交",
+		name: "工具",
 		url: "#",
-		icon: "material-symbols:group",
+		icon: "material-symbols:wrench",
 		children: [
-			// 相册
-			LinkPresets.Friends,
-
-			// 追番
-			LinkPresets.Guestbook,
-		],
-	});
-
-	// 我的及其子菜单
-	links.push({
-		name: "我的",
-		url: "#",
-		icon: "material-symbols:person",
-		children: [
-			// 相册
-			LinkPresets.Gallery,
-
-			// 追番
-			LinkPresets.Anime,
-
-			// 番组计划
-			LinkPresets.Bangumi,
-		],
-	});
-
-	// 关于及其子菜单
-	links.push({
-		name: "关于",
-		url: "#",
-		icon: "material-symbols:info",
-		children: [
-			// 打赏
-			LinkPresets.Sponsor,
-
-			// 关于页面
-			LinkPresets.About,
-		],
-	});
-
-	// 自定义导航栏链接
-	links.push({
-		name: "链接",
-		url: "#",
-		icon: "material-symbols:link",
-		// 子菜单
-		children: [
+			// 云剪贴板
 			{
-				name: "GitHub",
-				url: "https://github.com/CuteLeaf/Firefly",
-				external: true,
-				icon: "fa7-brands:github",
+				name: "剪贴板",
+				url: "/clipboard/",
+				icon: "material-symbols:content-paste",
+				pageKey: "clipboard",
 			},
+			// 云图床
 			{
-				name: "Gitee",
-				url: "https://gitee.com/CuteLeaf/Firefly",
-				external: true,
-				icon: "fa7-brands:gitee",
-			},
-			{
-				name: "QQ交流群",
-				url: "https://qm.qq.com/q/ZGsFa8qX2G",
-				external: true,
-				icon: "fa7-brands:qq",
-			},
-			{
-				name: "Firefly文档",
-				url: "https://docs-firefly.cuteleaf.cn",
-				external: true,
-				icon: "material-symbols:docs",
+				name: "图床",
+				url: "/gallery/",
+				icon: "material-symbols:image",
+				pageKey: "gallery",
 			},
 		],
 	});
 
-	// 文档链接
-	// links.push({
-	// 	name: "文档",
-	// 	url: "https://docs-firefly.cuteleaf.cn",
-	// 	external: true,
-	// 	icon: "material-symbols:docs",
-	// });
+	// 项目展示
+	links.push({
+		name: "项目",
+		url: "/projects/",
+		icon: "material-symbols:rocket-launch",
+		pageKey: "projects",
+	});
 
 	return { links } as NavBarConfig;
 };

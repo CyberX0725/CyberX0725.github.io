@@ -43,8 +43,22 @@ const dynamicCollection = defineCollection({
 	}),
 });
 
+const projectsCollection = defineCollection({
+	loader: glob({ pattern: "**/*.md", base: "./src/content/projects" }),
+	schema: z.object({
+		title: z.string(),
+		description: z.string().optional().default(""),
+		cover: z.string().optional().default(""),
+		tags: z.array(z.string()).optional().default([]),
+		demoUrl: z.string().optional().default(""),
+		repoUrl: z.string().optional().default(""),
+		stars: z.number().optional().default(0),
+	}),
+});
+
 export const collections = {
 	dynamic: dynamicCollection,
 	posts: postsCollection,
+	projects: projectsCollection,
 	spec: specCollection,
 };
