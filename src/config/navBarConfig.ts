@@ -31,27 +31,20 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 		],
 	});
 
-	// 工具及其子菜单
+	// 云剪贴板
 	links.push({
-		name: "工具",
-		url: "#",
-		icon: "material-symbols:wrench",
-		children: [
-			// 云剪贴板
-			{
-				name: "剪贴板",
-				url: "/clipboard/",
-				icon: "material-symbols:content-paste",
-				pageKey: "clipboard",
-			},
-			// 云图床
-			{
-				name: "图床",
-				url: "/gallery/",
-				icon: "material-symbols:image",
-				pageKey: "gallery",
-			},
-		],
+		name: "剪贴板",
+		url: "/clipboard/",
+		icon: "material-symbols:content-paste",
+		pageKey: "clipboard",
+	});
+
+	// 云图床
+	links.push({
+		name: "图床",
+		url: "/imgbed/",
+		icon: "material-symbols:image",
+		pageKey: "imgbed",
 	});
 
 	// 项目展示

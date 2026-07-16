@@ -33,5 +33,14 @@
   "src:content/posts/images/both-list.avif": "e5e7e4e6e8e7e3e3e5",
   "src:content/posts/images/both-grid.avif": "d5d6d3e6e7e3d8d9e3",
   "src:content/posts/images/1.avif": "b5b0b3bcb6bbe0e0df",
-  "src:content/posts/guide/cover.avif": "c8bca9dde6d2babfb5"
+  "src:content/posts/guide/cover.avif": "c8bca9dde6d2babfb5",
+  "public:imgbed/img/logo.e8dbfa27.png": "9a7b606485887f8470",
+  "public:imgbed/img/background.ea1b7ee7.jpg": "1d2a69262965072546",
+  "public:imgbed/img/background-light.f17603bc.jpg": "a0b5d89badd4b8b0b6",
+  "public:imgbed/img/404.8ed11fb3.png": "a89d94756a6d5c484a",
+  "public:imgbed/static/media/WhiteListOn.png": "f2dbd7f3dcd8efd8d3",
+  "public:imgbed/static/media/logo.png": "abd6e5addbe9add8e6",
+  "public:imgbed/static/media/logo-dark.png": "f3f3f3f0f4f0f0f0f0",
+  "public:imgbed/static/media/BlockImg.png": "f5deddf5dfdff1d7d4",
+  "public:imgbed/static/media/404.png": "f4e9e1eee4eceddcdf"
 }
