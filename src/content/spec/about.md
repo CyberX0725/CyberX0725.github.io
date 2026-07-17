@@ -1,27 +1,37 @@
 # 关于我 / About Me
 
-你好！我是 **夏叶** ，一个在数字世界中默默无闻的一片叶子。
+你好！我是 **CyberX0725**，一个热爱编程的技术爱好者，正在探索代码的无限可能。
+
+## 🎯 个人简介
+
+- **用户名**: CyberX0725
+- **邮箱**: 3262525349@qq.com
+- **GitHub**: [@CyberX0725](https://github.com/CyberX0725)
+
+## 💻 技术栈
+
+- **前端**: HTML5, CSS3, JavaScript, TypeScript, Astro, Svelte, Vue
+- **工具**: Git, GitHub, Cloudflare Workers, pnpm
+- **兴趣**: Web 开发、自动化、技术博客
 
 ## 🛠️ 关于本站
 
-这个网站使用 **Astro** 框架构建，采用了 [Firefly](https://github.com/CuteLeaf/Firefly) 模板，Firefly 是基于 [Fuwari](https://github.com/saicaca/fuwari) 的二次开发。
+这个网站使用 **Astro** 框架构建，采用了 [Firefly](https://github.com/CuteLeaf/Firefly) 主题模板。
 
-**Firefly** 是一款基于 Astro 框架和 Fuwari 模板开发的清新美观且现代化个人博客主题模板，专为技术爱好者和内容创作者设计。该主题融合了现代 Web 技术栈，提供了丰富的功能模块和高度可定制的界面，让您能够轻松打造出专业且美观的个人博客网站。
+**主要功能**:
+- 📝 技术博客文章发布
+- ☁️ 云剪贴板 - 跨设备文本同步
+- 🖼️ 图床 - 基于 Cloudflare 的图片托管
+- 🔍 全局搜索 - Pagefind 全文检索
+- 📊 项目展示 - 个人项目作品集
 
+## 📚 博客内容
 
-**🖥️在线预览： [Firefly - Demo site](https://firefly.cuteleaf.cn/)**
-
-**🏠我的博客： [https://blog.cuteleaf.cn](https://blog.cuteleaf.cn/)**
-
-**📝Firefly使用文档： [https://docs-firefly.cuteleaf.cn](https://docs-firefly.cuteleaf.cn/)**
-
-**⭐Firefly开源地址：[https://github.com/CuteLeaf/Firefly](https://github.com/CuteLeaf/Firefly)** 
-
-**⭐Fuwari开源地址：[https://github.com/saicaca/fuwari](https://github.com/saicaca/fuwari)**
-
-::github{repo="CuteLeaf/Firefly"}
-
-::github{repo="saicaca/fuwari"}
+这里主要分享：
+- 前端开发经验与技巧
+- 技术教程与实践
+- 编程心得与思考
+- 工具推荐与配置
 
 ---
 

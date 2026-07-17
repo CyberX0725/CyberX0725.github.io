@@ -78,15 +78,6 @@ const stats = [
 		label: i18n(I18nKey.siteStatsPostCount),
 		value: posts.length,
 	},
-	...(siteConfig.pages.dynamic
-		? [
-				{
-					icon: "material-symbols:dynamic-feed-rounded",
-					label: i18n(I18nKey.siteStatsDynamicCount),
-					value: dynamics.length,
-				},
-			]
-		: []),
 	{
 		icon: "material-symbols:folder-outline",
 		label: i18n(I18nKey.siteStatsCategoryCount),
@@ -106,15 +97,15 @@ const stats = [
 	{
 		icon: "material-symbols:calendar-clock-outline",
 		label: i18n(I18nKey.siteStatsRunningDays),
-		value: 0, // 将由客户端更新
+		value: 0,
 		suffix: i18n(I18nKey.siteStatsDays).replace("{days}", ""),
 		dynamic: true,
 		id: "running-days",
 	},
 	{
-		icon: "mingcute:heartbeat-line",
+		icon: "material-symbols:update",
 		label: i18n(I18nKey.siteStatsLastUpdate),
-		value: 0, // 将由客户端更新
+		value: 0,
 		suffix: i18n(I18nKey.siteStatsDaysAgo).replace("{days}", ""),
 		dynamic: true,
 		id: "last-update",
