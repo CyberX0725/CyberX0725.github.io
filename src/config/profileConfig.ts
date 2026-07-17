@@ -6,7 +6,7 @@ export const profileConfig: ProfileConfig = {
 	// 1. public 目录（以 "/" 开头，不优化）："/assets/images/avatar.webp"
 	// 2. src 目录（不以 "/" 开头，自动优化但会增加构建时间，推荐）："assets/images/avatar.webp"
 	// 3. 远程 URL："https://example.com/avatar.jpg"
-	avatar: "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Darth%20Vader%20Star%20Wars%20dark%20lord%20portrait%20purple%20red%20background%20lightsaber%20digital%20art%20style&image_size=square_hd",
+	avatar: "assets/images/avatar.avif",
 
 	// 名字
 	name: "CyberX0725",
