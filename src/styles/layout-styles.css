@@ -403,6 +403,24 @@ html[data-wallpaper-mode="banner"] #wallpaper-wrapper .wallpaper-image-extended 
     padding-block: 4.5rem;
 }
 
+html[data-wallpaper-mode="banner"] body.is-home #wallpaper-wrapper #banner-images-container .wallpaper-image-extended img {
+    object-fit: cover !important;
+    object-position: center top !important;
+    padding-block: 0;
+}
+
+html[data-wallpaper-mode="banner"] body.is-home #wallpaper-wrapper .wallpaper-image-backdrop {
+    display: none;
+}
+
+html[data-wallpaper-mode="banner"] body.is-home .main-grid-shell {
+    pointer-events: none;
+}
+
+html[data-wallpaper-mode="banner"] body.is-home #main-grid {
+    pointer-events: auto;
+}
+
 #wallpaper-wrapper.wallpaper-fullscreen .wallpaper-image-extended img {
     padding-block: 4.5rem 2rem;
 }

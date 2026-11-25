@@ -1,0 +1,128 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
+<button
+	type="button"
+	id="wallpaper-preview-trigger"
+	aria-label="查看完整壁纸"
+	aria-haspopup="dialog"
+	aria-controls="wallpaper-preview"
+>
+	<span class="wallpaper-preview-icon">
+		<Icon name="material-symbols:open-in-full-rounded" aria-hidden="true" />
+	</span>
+</button>
+
+<dialog id="wallpaper-preview" aria-label="完整壁纸">
+	<button type="button" class="wallpaper-preview-dismiss" aria-label="收起壁纸" autofocus>
+		<span class="wallpaper-preview-image"></span>
+		<span class="wallpaper-preview-icon">
+			<Icon name="material-symbols:close-fullscreen-rounded" aria-hidden="true" />
+		</span>
+	</button>
+</dialog>
+
+<script>
+	const trigger = document.querySelector<HTMLButtonElement>("#wallpaper-preview-trigger");
+	const preview = document.querySelector<HTMLDialogElement>("#wallpaper-preview");
+	const dismiss = preview?.querySelector<HTMLButtonElement>(".wallpaper-preview-dismiss");
+	const imageContainer = preview?.querySelector(".wallpaper-preview-image");
+
+	if (trigger && preview && dismiss && imageContainer) {
+		trigger.addEventListener("click", () => {
+			const image = document.querySelector<HTMLImageElement>(
+				"#banner-images-container .slide-item.active img",
+			);
+			if (!image || preview.open) return;
+
+			const fullImage = new Image();
+			fullImage.alt = "";
+			fullImage.sizes = "100vw";
+			fullImage.srcset = image.srcset;
+			fullImage.src = image.currentSrc || image.src;
+			imageContainer.replaceChildren(fullImage);
+			preview.showModal();
+		});
+
+		dismiss.addEventListener("click", () => preview.close());
+		preview.addEventListener("close", () => {
+			if (!preview.open) imageContainer.replaceChildren();
+		});
+		document.addEventListener("swup:visit:start", () => {
+			if (preview.open) preview.close();
+		});
+	}
+</script>
+
+<style>
+	#wallpaper-preview-trigger {
+		display: none;
+		position: absolute;
+		inset: 0;
+		z-index: 25;
+		width: 100%;
+		height: 100%;
+		cursor: zoom-in;
+	}
+	:global(html[data-wallpaper-mode="banner"] body.is-home) #wallpaper-preview-trigger {
+		display: block;
+	}
+	.wallpaper-preview-icon {
+		position: absolute;
+		top: 5.5rem;
+		right: 1rem;
+		display: grid;
+		place-items: center;
+		width: 2.5rem;
+		height: 2.5rem;
+		border-radius: 50%;
+		background: rgb(0 0 0 / 52%);
+		color: #fff;
+		font-size: 1.2rem;
+	}
+	#wallpaper-preview-trigger:focus-visible .wallpaper-preview-icon,
+	.wallpaper-preview-dismiss:focus-visible .wallpaper-preview-icon {
+		outline: 2px solid #fff;
+		outline-offset: 3px;
+	}
+	#wallpaper-preview {
+		position: fixed;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		max-width: none;
+		max-height: none;
+		margin: 0;
+		padding: 0;
+		border: 0;
+		background: transparent;
+	}
+	#wallpaper-preview::backdrop {
+		background: rgb(0 0 0 / 76%);
+		backdrop-filter: blur(5px);
+	}
+	.wallpaper-preview-dismiss {
+		display: grid;
+		place-items: center;
+		width: 100%;
+		height: 100%;
+		cursor: zoom-out;
+	}
+	.wallpaper-preview-dismiss .wallpaper-preview-icon {
+		top: 1rem;
+	}
+	.wallpaper-preview-image {
+		display: grid;
+		place-items: center;
+		width: 100%;
+	}
+	.wallpaper-preview-image :global(img) {
+		display: block;
+		width: auto;
+		height: auto;
+		max-width: 100%;
+		max-height: 100dvh;
+		object-fit: contain;
+	}
+</style>

@@ -12,6 +12,7 @@ import FloatingControls from "@/components/controls/FloatingControls.astro";
 import ScrollDownIndicator from "@/components/controls/ScrollDownIndicator.astro";
 import BackgroundPlayer from "@/components/features/BackgroundPlayer.astro";
 import TypewriterText from "@/components/features/TypewriterText.astro";
+import WallpaperPreview from "@/components/features/WallpaperPreview.astro";
 import CategoryBar from "@/components/layout/CategoryBar.astro";
 import {
 	backgroundWallpaper,
@@ -466,6 +467,10 @@ const hasMultipleImages =
                 return mode === WALLPAPER_BANNER || mode === 'fullscreen';
             }
 
+            function isWallpaperPreviewOpen() {
+                return document.getElementById('wallpaper-preview')?.open === true;
+            }
+
             // 获取当前设备可见的 slide-item
             function getVisibleSlides() {
                 var all = container.querySelectorAll('.slide-item');
@@ -563,10 +568,12 @@ const hasMultipleImages =
                 preloadNextSlide();
                 appState.autoPlayTimer = setTimeout(function advance() {
                     if (!appState.isPlaying) return;
-                    var slides = getVisibleSlides();
-                    var currentIdx = getCurrentIndex(slides);
-                    changeToSlide(currentIdx + 1, false);
-                    preloadNextSlide();
+                    if (!isWallpaperPreviewOpen()) {
+                        var slides = getVisibleSlides();
+                        var currentIdx = getCurrentIndex(slides);
+                        changeToSlide(currentIdx + 1, false);
+                        preloadNextSlide();
+                    }
                     appState.autoPlayTimer = setTimeout(advance, interval);
                 }, interval);
             }
@@ -589,7 +596,7 @@ const hasMultipleImages =
             // 键盘控制
             document.addEventListener('keydown', function(e) {
                 if (e.defaultPrevented || (e.target instanceof Element && e.target.closest('input, textarea, select, button, [contenteditable]'))) return;
-                if (!isBannerWallpaperMode() || !isCarouselEnabled()) return;
+                if (isWallpaperPreviewOpen() || !isBannerWallpaperMode() || !isCarouselEnabled()) return;
                 if (e.key === 'ArrowRight') {
                     var slides = getVisibleSlides();
                     changeToSlide(getCurrentIndex(slides) + 1);
@@ -607,7 +614,7 @@ const hasMultipleImages =
                 appState.touchStartX = e.changedTouches[0].screenX;
             }, { passive: true });
             document.addEventListener('touchend', function(e) {
-                if (!isBannerWallpaperMode() || !isCarouselEnabled()) return;
+                if (isWallpaperPreviewOpen() || !isBannerWallpaperMode() || !isCarouselEnabled()) return;
                 appState.touchEndX = e.changedTouches[0].screenX;
                 var diff = appState.touchEndX - appState.touchStartX;
                 if (Math.abs(diff) > 50) {
@@ -836,6 +843,7 @@ const hasMultipleImages =
         style={`height: ${gradientHeight}; background: linear-gradient(to bottom, transparent, var(--page-bg));`}>
     </div>
     ) : null}
+    {hasMultipleImages && <WallpaperPreview />}
 </div>
 )}
 
@@ -850,7 +858,7 @@ const hasMultipleImages =
 <!-- Main content -->
 <div class={`absolute w-full z-30 pointer-events-none ${mobileNonHomeBannerClass ? 'mobile-main-no-banner' : ''} ${!(isBannerMode && isBackgroundEnabled) ? 'no-banner-layout' : ''}`} style={isFullscreenMode ? 'top: 0;' : `top: ${finalMainPanelTop}`}>
     <!-- The pointer-events-none here prevent blocking the click event of the TOC -->
-    <div class="relative w-full xl:w-[92vw] max-w-(--page-width) mx-auto pointer-events-auto">
+    <div class="main-grid-shell relative w-full xl:w-[92vw] max-w-(--page-width) mx-auto pointer-events-auto">
         <div id="main-grid"
           class={`transition duration-700 w-full left-0 right-0 grid ${gridCols} grid-rows-[auto_1fr_auto] lg:grid-rows-[auto] mx-auto gap-4 px-2 md:px-4 ${!sidebarConfig.mobileShowSidebar ? 'mobile-no-sidebar' : ''}`}
           data-sidebar-enable={sidebarLayoutConfig.enable ? "true" : "false"}
