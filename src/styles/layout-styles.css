@@ -421,6 +421,27 @@ html[data-wallpaper-mode="banner"] body.is-home #main-grid {
     pointer-events: auto;
 }
 
+.wallpaper-slide-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    pointer-events: none;
+    opacity: 0;
+}
+
+.wallpaper-slide-video.is-playing {
+    opacity: 1;
+}
+
+#wallpaper-wrapper.wallpaper-fullscreen .wallpaper-slide-video {
+    object-fit: contain;
+    object-position: center;
+    padding-block: 4.5rem 2rem;
+}
+
 #wallpaper-wrapper.wallpaper-fullscreen .wallpaper-image-extended img {
     padding-block: 4.5rem 2rem;
 }

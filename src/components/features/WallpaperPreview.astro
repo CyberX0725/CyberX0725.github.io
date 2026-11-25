@@ -31,23 +31,41 @@ import { Icon } from "astro-icon/components";
 
 	if (trigger && preview && dismiss && imageContainer) {
 		trigger.addEventListener("click", () => {
-			const image = document.querySelector<HTMLImageElement>(
-				"#banner-images-container .slide-item.active img",
-			);
+			const slide = document.querySelector<HTMLElement>("#banner-images-container .slide-item.active");
+			const image = slide?.querySelector("img");
 			if (!image || preview.open) return;
 
-			const fullImage = new Image();
-			fullImage.alt = "";
-			fullImage.sizes = "100vw";
-			fullImage.srcset = image.srcset;
-			fullImage.src = image.currentSrc || image.src;
-			imageContainer.replaceChildren(fullImage);
+			const videoSource = slide?.dataset.wallpaperVideo;
+			if (videoSource) {
+				const video = document.createElement("video");
+				video.muted = true;
+				video.loop = true;
+				video.playsInline = true;
+				video.autoplay = true;
+				video.poster = image.currentSrc || image.src;
+				video.src = videoSource;
+				const playingVideo = slide?.querySelector("video");
+				const playbackTime = playingVideo?.currentTime ?? 0;
+				video.addEventListener("loadedmetadata", () => {
+					video.currentTime = playbackTime;
+				}, { once: true });
+				imageContainer.replaceChildren(video);
+			} else {
+				const fullImage = new Image();
+				fullImage.alt = "";
+				fullImage.sizes = "100vw";
+				fullImage.srcset = image.srcset;
+				fullImage.src = image.currentSrc || image.src;
+				imageContainer.replaceChildren(fullImage);
+			}
 			preview.showModal();
+			document.dispatchEvent(new Event("wallpaperPreviewChange"));
 		});
 
 		dismiss.addEventListener("click", () => preview.close());
 		preview.addEventListener("close", () => {
 			if (!preview.open) imageContainer.replaceChildren();
+			document.dispatchEvent(new Event("wallpaperPreviewChange"));
 		});
 		document.addEventListener("swup:visit:start", () => {
 			if (preview.open) preview.close();
@@ -117,7 +135,8 @@ import { Icon } from "astro-icon/components";
 		place-items: center;
 		width: 100%;
 	}
-	.wallpaper-preview-image :global(img) {
+	.wallpaper-preview-image :global(img),
+	.wallpaper-preview-image :global(video) {
 		display: block;
 		width: auto;
 		height: auto;

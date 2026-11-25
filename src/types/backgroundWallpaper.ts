@@ -56,6 +56,7 @@ export type BackgroundWallpaperConfig = {
 		};
 		// 壁纸轮播配置，横幅壁纸和全屏壁纸共享
 		carousel?: {
+			videoDirectory?: string; // 可选的 MP4 目录，视频文件与轮播图同名
 			shuffle?: boolean; // 每次打开页面打乱轮播顺序
 			enable: boolean; // 是否启用壁纸轮播
 			interval?: number; // 轮播间隔时间，单位毫秒

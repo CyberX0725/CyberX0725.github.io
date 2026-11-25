@@ -61,6 +61,7 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 		carousel: {
 			enable: true,
 			shuffle: true,
+			videoDirectory: "/assets/wallpapers/workshop",
 			interval: 6000,
 			transitionEffect: "fade",
 			switchable: true,

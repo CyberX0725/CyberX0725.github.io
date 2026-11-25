@@ -38,6 +38,7 @@ import {
 	getResponsiveSidebarConfig,
 	type ResponsiveSidebarConfig,
 } from "@/utils/responsive-utils";
+import { url } from "@/utils/url-utils";
 import Layout from "./Layout.astro";
 
 import "@/styles/markdown.css";
@@ -274,6 +275,13 @@ const bannerCarouselSwitchable =
 	backgroundWallpaper.common?.carousel?.switchable ?? false;
 const bannerCarouselShuffle =
 	backgroundWallpaper.common?.carousel?.shuffle ?? false;
+const wallpaperVideoDirectory = backgroundWallpaper.common?.carousel?.videoDirectory;
+const getWallpaperVideo = (src: string) => {
+	const filename = src.split("/").pop()?.replace(/\.[^.]+$/, ".mp4");
+	return wallpaperVideoDirectory && filename
+		? url(`${wallpaperVideoDirectory}/${filename}`)
+		: undefined;
+};
 const bannerCarouselInterval = Math.max(
 	backgroundWallpaper.common?.carousel?.interval ?? 5000,
 	3000,
@@ -341,7 +349,7 @@ const hasMultipleImages =
          data-carousel-effect={bannerCarouselEffect}
          data-carousel-shuffle={bannerCarouselShuffle}>
         {!sharedWallpaperSlides && backgroundImages.mobile.map((src, index) => (
-            <div class:list={["slide-item block lg:hidden", index === 0 && "active"]} data-index={index}>
+            <div class:list={["slide-item block lg:hidden", index === 0 && "active"]} data-index={index} data-wallpaper-video={getWallpaperVideo(src)}>
                 <ImageWrapper
                     alt="Mobile background image of the blog"
                     class="object-cover h-full w-full"
@@ -361,7 +369,7 @@ const hasMultipleImages =
                 ? "template"
                 : "div";
             return (
-                <div class:list={["slide-item", !sharedWallpaperSlides && "hidden lg:block", index === 0 && "active"]} data-index={index}>
+                <div class:list={["slide-item", !sharedWallpaperSlides && "hidden lg:block", index === 0 && "active"]} data-index={index} data-wallpaper-video={getWallpaperVideo(src)}>
                     <SlideContent class="contents">
                         <ImageWrapper
                             id={index === 0 ? "banner" : undefined}
@@ -436,6 +444,8 @@ const hasMultipleImages =
             var shuffle = container.dataset.carouselShuffle === 'true';
             var FADE_MS = 800;
             var transitioning = false;
+            var activeVideo = null;
+            var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
             // 创建过渡遮罩（用于 kenburns 效果的 LQIP 桥接）
             var overlay = null;
@@ -469,6 +479,39 @@ const hasMultipleImages =
 
             function isWallpaperPreviewOpen() {
                 return document.getElementById('wallpaper-preview')?.open === true;
+            }
+
+            function updateWallpaperVideo() {
+                var slides = getVisibleSlides();
+                var slide = slides[getCurrentIndex(slides)];
+                var src = slide?.dataset.wallpaperVideo;
+                var shouldPlay = src && isBannerWallpaperMode()
+                    && document.body.classList.contains('is-home') && !reducedMotion.matches;
+                if (activeVideo && (!shouldPlay || activeVideo.parentElement !== slide)) {
+                    activeVideo.pause();
+                    activeVideo.remove();
+                    activeVideo = null;
+                }
+                if (!shouldPlay) return;
+
+                if (!activeVideo) {
+                    activeVideo = document.createElement('video');
+                    activeVideo.className = 'wallpaper-slide-video';
+                    activeVideo.setAttribute('aria-hidden', 'true');
+                    activeVideo.muted = true;
+                    activeVideo.loop = true;
+                    activeVideo.playsInline = true;
+                    activeVideo.src = src;
+                    activeVideo.addEventListener('playing', function(event) {
+                        event.currentTarget.classList.add('is-playing');
+                    }, { once: true });
+                    slide.append(activeVideo);
+                }
+                if (isWallpaperPreviewOpen()) {
+                    activeVideo.pause();
+                } else {
+                    activeVideo.play().catch(function() {});
+                }
             }
 
             // 获取当前设备可见的 slide-item
@@ -515,6 +558,7 @@ const hasMultipleImages =
                     if (j === nextIndex) slides[j].classList.add('active');
                     else slides[j].classList.remove('active');
                 }
+                updateWallpaperVideo();
             }
 
             function changeToSlide(targetIndex, resetProgress) {
@@ -629,12 +673,16 @@ const hasMultipleImages =
                 e.detail && e.detail.enabled ? startAutoPlay() : stopAutoPlay();
             });
             window.addEventListener('wallpaperModeChange', function(e) {
+                updateWallpaperVideo();
                 if (e.detail && (e.detail.mode === 'banner' || e.detail.mode === 'fullscreen')) {
                     if (isCarouselEnabled()) startAutoPlay();
                 } else {
                     stopAutoPlay();
                 }
             });
+            document.addEventListener('wallpaperPreviewChange', updateWallpaperVideo);
+            document.addEventListener('firefly:page:loaded', updateWallpaperVideo);
+            reducedMotion.addEventListener('change', updateWallpaperVideo);
 
             if (shuffle) {
                 var shuffledSlides = Array.from(container.querySelectorAll('.slide-item'));
@@ -650,6 +698,8 @@ const hasMultipleImages =
             if (slides.length > 1) {
                 var firstIndex = shuffle ? 0 : Math.floor(Math.random() * slides.length);
                 applySlideChange(slides, firstIndex);
+            } else {
+                updateWallpaperVideo();
             }
 
             // 启动
