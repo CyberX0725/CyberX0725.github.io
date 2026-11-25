@@ -13,6 +13,7 @@ export type BackgroundWallpaperConfig = {
 	// 横幅壁纸和全屏壁纸共享配置
 	common?: {
 		dimOpacity?: number; // 横幅文字遮罩暗度，0-1之间，值越大越暗，默认0.15
+		imageFit?: "cover" | "contain"; // contain 完整显示原图，并用同图模糊背景填充留白
 		playerMode?: "order" | "random"; // 多视频播放模式："order" 顺序循环（默认），"random" 随机切换
 		homeText?: {
 			enable: boolean; // 是否在首页显示自定义文字（全局开关）

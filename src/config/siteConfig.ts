@@ -9,7 +9,7 @@ export const siteConfig: SiteConfig = {
 	title: "CyberX0725",
 
 	// 站点副标题
-	subtitle: "探索代码的无限可能",
+	subtitle: "",
 
 	// 站点 URL
 	site_url: "https://cyberx0725.github.io",

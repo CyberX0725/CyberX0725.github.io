@@ -52,7 +52,8 @@ export async function GET(context: APIContext) {
 	}
 	return rss({
 		title: siteConfig.title,
-		description: siteConfig.subtitle || "No description",
+		description:
+			siteConfig.subtitle || siteConfig.description || "No description",
 		site: context.site ?? "https://firefly.cuteleaf.cn",
 		customData: `<templateTheme>Firefly</templateTheme>
 		<templateThemeVersion>${pkg.version}</templateThemeVersion>

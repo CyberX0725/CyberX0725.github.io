@@ -12,7 +12,7 @@ export const profileConfig: ProfileConfig = {
 	name: "CyberX0725",
 
 	// 个人签名
-	bio: "热爱编程的技术爱好者，探索代码的无限可能",
+	bio: "热爱编程的技术爱好者",
 
 	// 链接配置
 	// 已经预装的图标集：fa7-brands，fa7-regular，fa7-solid，material-symbols，simple-icons

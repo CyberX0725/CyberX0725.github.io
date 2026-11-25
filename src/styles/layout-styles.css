@@ -394,6 +394,26 @@ html.is-page-transitioning .banner-home-text-overlay {
 }
 
 /* ===== 壁纸轮播样式（基于 CSS transition） ===== */
+#wallpaper-wrapper #banner-images-container .wallpaper-image-extended img {
+    object-fit: contain !important;
+    transform: none;
+}
+
+html[data-wallpaper-mode="banner"] #wallpaper-wrapper .wallpaper-image-extended img {
+    padding-block: 4.5rem;
+}
+
+#wallpaper-wrapper.wallpaper-fullscreen .wallpaper-image-extended img {
+    padding-block: 4.5rem 2rem;
+}
+
+.wallpaper-image-backdrop {
+    background-position: center;
+    background-size: cover;
+    filter: blur(24px) brightness(0.5);
+    transform: scale(1.15);
+}
+
 .slide-item {
     position: absolute;
     inset: 0;
