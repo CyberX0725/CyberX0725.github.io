@@ -444,7 +444,6 @@ const hasMultipleImages =
             var shuffle = container.dataset.carouselShuffle === 'true';
             var FADE_MS = 800;
             var transitioning = false;
-            var activeVideo = null;
             var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
             // 创建过渡遮罩（用于 kenburns 效果的 LQIP 桥接）
@@ -481,36 +480,75 @@ const hasMultipleImages =
                 return document.getElementById('wallpaper-preview')?.open === true;
             }
 
-            function updateWallpaperVideo() {
-                var slides = getVisibleSlides();
-                var slide = slides[getCurrentIndex(slides)];
-                var src = slide?.dataset.wallpaperVideo;
-                var shouldPlay = src && isBannerWallpaperMode()
+            function canPlayWallpaperVideos() {
+                return isBannerWallpaperMode()
                     && document.body.classList.contains('is-home') && !reducedMotion.matches;
-                if (activeVideo && (!shouldPlay || activeVideo.parentElement !== slide)) {
-                    activeVideo.pause();
-                    activeVideo.remove();
-                    activeVideo = null;
-                }
-                if (!shouldPlay) return;
+            }
 
-                if (!activeVideo) {
-                    activeVideo = document.createElement('video');
-                    activeVideo.className = 'wallpaper-slide-video';
-                    activeVideo.setAttribute('aria-hidden', 'true');
-                    activeVideo.muted = true;
-                    activeVideo.loop = true;
-                    activeVideo.playsInline = true;
-                    activeVideo.src = src;
-                    activeVideo.addEventListener('playing', function(event) {
-                        event.currentTarget.classList.add('is-playing');
-                    }, { once: true });
-                    slide.append(activeVideo);
+            function prepareWallpaperVideo(slide) {
+                var src = slide?.dataset.wallpaperVideo;
+                if (!src || !canPlayWallpaperVideos()) return null;
+
+                var existing = slide.querySelector('.wallpaper-slide-video');
+                if (existing) return existing;
+
+                var video = document.createElement('video');
+                video.className = 'wallpaper-slide-video';
+                video.setAttribute('aria-hidden', 'true');
+                video.muted = true;
+                video.loop = true;
+                video.playsInline = true;
+                video.preload = 'auto';
+                video.src = src;
+                video.addEventListener('playing', function() {
+                    video.classList.add('is-playing');
+                }, { once: true });
+                slide.append(video);
+                return video;
+            }
+
+            function removeWallpaperVideo(video) {
+                if (!video?.isConnected) return;
+                video.pause();
+                video.removeAttribute('src');
+                video.load();
+                video.remove();
+            }
+
+            function keepWallpaperVideos(slides) {
+                for (var video of container.querySelectorAll('.wallpaper-slide-video')) {
+                    if (!slides.includes(video.parentElement)) removeWallpaperVideo(video);
+                }
+            }
+
+            function updateWallpaperVideo() {
+                if (!canPlayWallpaperVideos()) {
+                    keepWallpaperVideos([]);
+                    return;
                 }
                 if (isWallpaperPreviewOpen()) {
-                    activeVideo.pause();
-                } else {
-                    activeVideo.play().catch(function() {});
+                    for (var video of container.querySelectorAll('.wallpaper-slide-video')) video.pause();
+                    return;
+                }
+
+                var slides = getVisibleSlides();
+                var current = slides[getCurrentIndex(slides)];
+                if (effect !== 'fade') keepWallpaperVideos([current]);
+                prepareWallpaperVideo(current)?.play().catch(function() {});
+                var outgoing = container.querySelector('.is-outgoing .wallpaper-slide-video');
+                outgoing?.play().catch(function() {});
+                if (appState.isPlaying) preloadNextSlide();
+            }
+
+            async function waitForWallpaperMedia(ready, maxWait) {
+                var timeout;
+                try {
+                    return await Promise.race([
+                        ready.then(function() { return true; }, function() { return false; }),
+                        new Promise(function(resolve) { timeout = setTimeout(resolve, maxWait, false); }),
+                    ]);
+                } finally {
+                    clearTimeout(timeout);
                 }
             }
 
@@ -558,7 +596,40 @@ const hasMultipleImages =
                     if (j === nextIndex) slides[j].classList.add('active');
                     else slides[j].classList.remove('active');
                 }
-                updateWallpaperVideo();
+            }
+
+            async function crossfadeToSlide(slides, currentIndex, nextIndex, automatic) {
+                var outgoing = slides[currentIndex];
+                var incoming = slides[nextIndex];
+                keepWallpaperVideos([outgoing, incoming]);
+                prepareSlide(incoming);
+
+                var incomingVideo = prepareWallpaperVideo(incoming);
+                // 先拿到可播放的视频帧。网络较慢时，用已解码的封面完成本次切换。
+                if (!incomingVideo || !await waitForWallpaperMedia(incomingVideo.play(), 1800)) {
+                    removeWallpaperVideo(incomingVideo);
+                    var image = incoming.querySelector('img');
+                    if (image) {
+                        image.loading = 'eager';
+                        if (!await waitForWallpaperMedia(image.decode(), 800)) return;
+                    }
+                }
+
+                if (!incoming.isConnected || isWallpaperPreviewOpen() || !isBannerWallpaperMode()
+                    || !isCarouselEnabled() || (automatic && !appState.isPlaying)) {
+                    removeWallpaperVideo(incomingVideo);
+                    return;
+                }
+
+                // 旧画面保持完整，直到上层的新画面完全淡入。
+                outgoing.classList.add('is-outgoing');
+                applySlideChange(slides, nextIndex);
+                var fade = incoming.getAnimations().find(function(animation) {
+                    return animation.transitionProperty === 'opacity';
+                });
+                await fade?.finished.catch(function() {});
+                outgoing.classList.remove('is-outgoing');
+                removeWallpaperVideo(outgoing.querySelector('.wallpaper-slide-video'));
             }
 
             function changeToSlide(targetIndex, resetProgress) {
@@ -573,13 +644,20 @@ const hasMultipleImages =
                 var currentIndex = getCurrentIndex(slides);
                 if (nextIndex === currentIndex) return;
 
-                if (effect === 'kenburns' && overlay) {
+                if (effect === 'fade') {
+                    transitioning = true;
+                    crossfadeToSlide(slides, currentIndex, nextIndex, resetProgress === false).finally(function() {
+                        transitioning = false;
+                        if (appState.isPlaying && !isWallpaperPreviewOpen()) preloadNextSlide();
+                    });
+                } else if (effect === 'kenburns' && overlay) {
                     // Ken Burns: 用下一张图的 LQIP 做桥接过渡
                     transitioning = true;
                     overlay.style.background = getSlideLqipStyle(slides[nextIndex]);
                     overlay.style.opacity = '1';
                     setTimeout(function() {
                         applySlideChange(slides, nextIndex);
+                        updateWallpaperVideo();
                         // 等新图 Ken Burns 动画开始后再移除遮罩
                         setTimeout(function() {
                             overlay.style.opacity = '0';
@@ -587,8 +665,8 @@ const hasMultipleImages =
                         }, 150);
                     }, FADE_MS / 2);
                 } else {
-                    // 其他效果：直接切换（CSS transition 处理）
                     applySlideChange(slides, nextIndex);
+                    updateWallpaperVideo();
                 }
 
                 if (resetProgress !== false && appState.isPlaying) {
@@ -616,16 +694,23 @@ const hasMultipleImages =
                         var slides = getVisibleSlides();
                         var currentIdx = getCurrentIndex(slides);
                         changeToSlide(currentIdx + 1, false);
-                        preloadNextSlide();
                     }
                     appState.autoPlayTimer = setTimeout(advance, interval);
                 }, interval);
             }
 
             function preloadNextSlide() {
+                if (transitioning || isWallpaperPreviewOpen()) return;
                 var slides = getVisibleSlides();
                 if (slides.length > 1) {
-                    prepareSlide(slides[(getCurrentIndex(slides) + 1) % slides.length]);
+                    var currentIndex = getCurrentIndex(slides);
+                    var next = slides[(currentIndex + 1) % slides.length];
+                    prepareSlide(next);
+                    if (effect !== 'fade') return;
+                    var image = next.querySelector('img');
+                    if (image) image.loading = 'eager';
+                    keepWallpaperVideos([slides[currentIndex], next]);
+                    prepareWallpaperVideo(next);
                 }
             }
 
@@ -698,9 +783,8 @@ const hasMultipleImages =
             if (slides.length > 1) {
                 var firstIndex = shuffle ? 0 : Math.floor(Math.random() * slides.length);
                 applySlideChange(slides, firstIndex);
-            } else {
-                updateWallpaperVideo();
             }
+            updateWallpaperVideo();
 
             // 启动
             if (isCarouselEnabled() && isBannerWallpaperMode()) {

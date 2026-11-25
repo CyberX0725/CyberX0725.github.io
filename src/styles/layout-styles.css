@@ -470,9 +470,21 @@ html[data-wallpaper-mode="banner"] body.is-home #main-grid {
     z-index: 10;
     pointer-events: auto;
 }
-/* Fade 效果 */
+/* 叠化：旧画面保持不透明，新画面在上层淡入 */
 .effect-fade .slide-item {
-    transition-property: opacity;
+    transition: none;
+}
+.effect-fade .slide-item.active {
+    transition: opacity 700ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.effect-fade .slide-item.is-outgoing {
+    opacity: 1;
+    z-index: 9;
+}
+@media (prefers-reduced-motion: reduce) {
+    .effect-fade .slide-item.active {
+        transition: none;
+    }
 }
 /* Zoom 效果 */
 .effect-zoom .slide-item {
