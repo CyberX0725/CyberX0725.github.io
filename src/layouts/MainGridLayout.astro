@@ -271,6 +271,8 @@ const bannerCarouselEnabledDefault =
 	backgroundWallpaper.common?.carousel?.enable ?? false;
 const bannerCarouselSwitchable =
 	backgroundWallpaper.common?.carousel?.switchable ?? false;
+const bannerCarouselShuffle =
+	backgroundWallpaper.common?.carousel?.shuffle ?? false;
 const bannerCarouselInterval = Math.max(
 	backgroundWallpaper.common?.carousel?.interval ?? 5000,
 	3000,
@@ -335,7 +337,8 @@ const hasMultipleImages =
          data-carousel-enabled={bannerCarouselEnabledDefault}
          data-carousel-switchable={bannerCarouselSwitchable}
          data-carousel-interval={bannerCarouselInterval}
-         data-carousel-effect={bannerCarouselEffect}>
+         data-carousel-effect={bannerCarouselEffect}
+         data-carousel-shuffle={bannerCarouselShuffle}>
         {!sharedWallpaperSlides && backgroundImages.mobile.map((src, index) => (
             <div class:list={["slide-item block lg:hidden", index === 0 && "active"]} data-index={index}>
                 <ImageWrapper
@@ -352,23 +355,31 @@ const hasMultipleImages =
                 />
             </div>
         ))}
-        {backgroundImages.desktop.map((src, index) => (
-            <div class:list={["slide-item", !sharedWallpaperSlides && "hidden lg:block", index === 0 && "active"]} data-index={index}>
-                <ImageWrapper
-                    id={index === 0 ? "banner" : undefined}
-                    alt={sharedWallpaperSlides ? "Background image of the blog" : "Desktop background image of the blog"}
-                    class="object-cover h-full w-full"
-                    src={src}
-                    position={backgroundWallpaper.banner?.position}
-                    extendBackground={extendWallpaper}
-                    widths={sharedWallpaperSlides ? [480, 750, 1080, 1680] : [1280, 1920, 2560]}
-                    sizes="100vw"
-                    loading={index === 0 ? "eager" : "lazy"}
-                    fetchpriority={index === 0 ? "high" : undefined}
-                    quality={configQuality}
-                />
-            </div>
-        ))}
+        {backgroundImages.desktop.map((src, index) => {
+            const SlideContent = sharedWallpaperSlides && bannerCarouselShuffle && index > 0
+                ? "template"
+                : "div";
+            return (
+                <div class:list={["slide-item", !sharedWallpaperSlides && "hidden lg:block", index === 0 && "active"]} data-index={index}>
+                    <SlideContent class="contents">
+                        <ImageWrapper
+                            id={index === 0 ? "banner" : undefined}
+                            alt={sharedWallpaperSlides ? "Background image of the blog" : "Desktop background image of the blog"}
+                            class="object-cover h-full w-full"
+                            src={src}
+                            position={backgroundWallpaper.banner?.position}
+                            extendBackground={extendWallpaper}
+                            widths={sharedWallpaperSlides ? [480, 750, 1080, 1680] : [1280, 1920, 2560]}
+                            sizes="100vw"
+                            loading={index === 0 ? "eager" : "lazy"}
+                            fetchpriority={index === 0 ? "high" : undefined}
+                            quality={configQuality}
+                            fadeIn={SlideContent !== "template"}
+                        />
+                    </SlideContent>
+                </div>
+            );
+        })}
     </div>
     ) : (
     /* 单图模式 */
@@ -421,6 +432,7 @@ const hasMultipleImages =
             var switchable = container.dataset.carouselSwitchable === 'true';
             var defaultEnabled = container.dataset.carouselEnabled === 'true';
             var effect = container.dataset.carouselEffect || 'fade';
+            var shuffle = container.dataset.carouselShuffle === 'true';
             var FADE_MS = 800;
             var transitioning = false;
 
@@ -478,7 +490,15 @@ const hasMultipleImages =
                 return 0;
             }
 
+            function prepareSlide(slide) {
+                var template = slide?.querySelector('template');
+                if (!template) return;
+                // 保留已加载的图片，避免再次轮到时重新创建。
+                template.replaceWith(template.content);
+            }
+
             function applySlideChange(slides, nextIndex) {
+                prepareSlide(slides[nextIndex]);
                 // Slide 效果需要 prev-waiting 辅助类
                 if (effect === 'slide') {
                     for (var i = 0; i < slides.length; i++) {
@@ -540,13 +560,22 @@ const hasMultipleImages =
                 if (!isBannerWallpaperMode()) return;
 
                 appState.isPlaying = true;
+                preloadNextSlide();
                 appState.autoPlayTimer = setTimeout(function advance() {
                     if (!appState.isPlaying) return;
                     var slides = getVisibleSlides();
                     var currentIdx = getCurrentIndex(slides);
                     changeToSlide(currentIdx + 1, false);
+                    preloadNextSlide();
                     appState.autoPlayTimer = setTimeout(advance, interval);
                 }, interval);
+            }
+
+            function preloadNextSlide() {
+                var slides = getVisibleSlides();
+                if (slides.length > 1) {
+                    prepareSlide(slides[(getCurrentIndex(slides) + 1) % slides.length]);
+                }
             }
 
             function stopAutoPlay() {
@@ -600,14 +629,20 @@ const hasMultipleImages =
                 }
             });
 
-            // 随机首张
+            if (shuffle) {
+                var shuffledSlides = Array.from(container.querySelectorAll('.slide-item'));
+                for (var k = shuffledSlides.length - 1; k > 0; k--) {
+                    var swapIndex = Math.floor(Math.random() * (k + 1));
+                    [shuffledSlides[k], shuffledSlides[swapIndex]] = [shuffledSlides[swapIndex], shuffledSlides[k]];
+                }
+                container.append(...shuffledSlides);
+            }
+
+            // 随机首张。打乱顺序时，从新顺序的第一张开始。
             var slides = getVisibleSlides();
             if (slides.length > 1) {
-                var randomIdx = Math.floor(Math.random() * slides.length);
-                for (var k = 0; k < slides.length; k++) {
-                    if (k === randomIdx) slides[k].classList.add('active');
-                    else slides[k].classList.remove('active');
-                }
+                var firstIndex = shuffle ? 0 : Math.floor(Math.random() * slides.length);
+                applySlideChange(slides, firstIndex);
             }
 
             // 启动
