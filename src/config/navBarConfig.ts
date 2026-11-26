@@ -18,7 +18,6 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 	// 文章及其子菜单
 	links.push({
 		name: "文章",
-		requiresPublishedPosts: true,
 		url: "#",
 		icon: "material-symbols:article",
 		children: [

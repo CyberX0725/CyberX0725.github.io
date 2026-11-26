@@ -1,6 +1,4 @@
 ---
-import PageStatus from "@/components/common/PageStatus.astro";
-import { hasPublishedOriginalPosts } from "@/utils/content-utils";
 import AdvancedSearch from "@components/pages/AdvancedSearch.svelte";
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
@@ -9,18 +7,15 @@ import { url } from "@/utils/url-utils";
 
 const title = i18n(I18nKey.search);
 const description = "";
-const hasPosts = await hasPublishedOriginalPosts();
 ---
 
 <MainGridLayout title={title} description={description}>
-    {hasPosts ? (
-        <div class="min-h-[80vh]">
-            <AdvancedSearch client:load title={title} description={description} />
-        </div>
-    ) : <PageStatus title="搜索" message="暂无原创文章。" />}
+    <div class="min-h-[80vh]">
+        <AdvancedSearch client:load title={title} description={description} />
+    </div>
 </MainGridLayout>
 
-{import.meta.env.PROD && hasPosts && (
+{import.meta.env.PROD && (
 <script is:inline define:vars={{ scriptUrl: url('/pagefind/pagefind.js') }}>
     if (!window.pagefind) {
         async function loadPagefind() {

@@ -5,7 +5,6 @@ export type NavBarLink = {
 	icon?: string; // 菜单项图标
 	children?: NavBarLink[]; // 支持子菜单
 	pageKey?: string;
-	requiresPublishedPosts?: boolean;
 };
 
 export enum NavBarSearchMethod {

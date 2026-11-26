@@ -32,10 +32,6 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 	common: {
 		dimOpacity: 0.2,
 		imageFit: "contain",
-		homeText: {
-			enable: true,
-			switchable: true,
-		},
 		navbar: {
 			transparentMode: "semi",
 			enableBlur: true,
