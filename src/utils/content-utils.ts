@@ -1,28 +1,46 @@
 import { type CollectionEntry, getCollection } from "astro:content";
+import { fireflyExampleSlugs, isFireflyExample } from "@/config/fireflyExamplesConfig";
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
 import { getCategoryUrl } from "@utils/url-utils";
 
-// // Retrieve posts and sort them by publication date
-async function getRawSortedPosts() {
-	const allBlogPosts = await getCollection("posts", ({ data }) => {
-		return import.meta.env.PROD ? data.draft !== true : true;
-	});
+function getOriginalPosts({ publishedOnly = import.meta.env.PROD } = {}) {
+	return getCollection("posts", ({ id, data }) =>
+		!isFireflyExample(id) && (!publishedOnly || data.draft !== true),
+	);
+}
 
-	const sorted = allBlogPosts.sort((a, b) => {
+export async function hasPublishedOriginalPosts(): Promise<boolean> {
+	return (await getOriginalPosts({ publishedOnly: true })).length > 0;
+}
+
+export async function getFireflyExamples(
+	{ includeDrafts = false }: { includeDrafts?: boolean } = {},
+): Promise<CollectionEntry<"posts">[]> {
+	const entries = await getCollection("posts", ({ id, data }) =>
+		isFireflyExample(id) && (includeDrafts || data.draft !== true),
+	);
+	const byId = new Map(entries.map((entry) => [entry.id, entry]));
+	return fireflyExampleSlugs.flatMap((slug) => {
+		const entry = byId.get(slug);
+		return entry ? [entry] : [];
+	});
+}
+
+async function getRawSortedPosts() {
+	const allBlogPosts = await getOriginalPosts();
+
+	return allBlogPosts.sort((a, b) => {
 		// 首先按置顶状态排序，置顶文章在前
 		if (a.data.pinned && !b.data.pinned) return -1;
 		if (!a.data.pinned && b.data.pinned) return 1;
 
 		// 如果置顶状态相同，则按发布日期排序
-		const dateA = new Date(a.data.published);
-		const dateB = new Date(b.data.published);
-		return dateA > dateB ? -1 : 1;
+		return b.data.published.getTime() - a.data.published.getTime();
 	});
-	return sorted;
 }
 
-export async function getSortedPosts() {
+export async function getSortedPosts(): Promise<CollectionEntry<"posts">[]> {
 	const sorted = await getRawSortedPosts();
 
 	for (let i = 1; i < sorted.length; i++) {
@@ -57,9 +75,7 @@ export type Tag = {
 };
 
 export async function getTagList(): Promise<Tag[]> {
-	const allBlogPosts = await getCollection<"posts">("posts", ({ data }) => {
-		return import.meta.env.PROD ? data.draft !== true : true;
-	});
+	const allBlogPosts = await getOriginalPosts();
 
 	const countMap: { [key: string]: number } = {};
 	allBlogPosts.forEach((post: { data: { tags: string[] } }) => {
@@ -84,9 +100,7 @@ export type Category = {
 };
 
 export async function getCategoryList(): Promise<Category[]> {
-	const allBlogPosts = await getCollection<"posts">("posts", ({ data }) => {
-		return import.meta.env.PROD ? data.draft !== true : true;
-	});
+	const allBlogPosts = await getOriginalPosts();
 	const count: { [key: string]: number } = {};
 	allBlogPosts.forEach((post: { data: { category: string | null } }) => {
 		if (!post.data.category) {
@@ -160,9 +174,9 @@ export async function getRelatedPosts(
 	currentPost: CollectionEntry<"posts">,
 	maxCount = 5,
 ): Promise<PostForList[]> {
-	const allPosts = await getCollection<"posts">("posts", ({ data }) => {
-		return import.meta.env.PROD ? data.draft !== true : true;
-	});
+	if (isFireflyExample(currentPost.id)) return [];
+
+	const allPosts = await getOriginalPosts();
 
 	// 排除自身和加密文章
 	const candidates = allPosts.filter(

@@ -112,14 +112,15 @@ export const siteConfig: SiteConfig = {
 		anime: false,
 		// 动态页面开关
 		dynamic: false,
-		// 剪贴板页面开关
-		clipboard: true,
+		// 以下入口关闭时保留其公开路径。
+		// 剪贴板导航开关
+		clipboard: false,
 		// 图床页面开关
-		imgbed: true,
+		imgbed: false,
 		// 仪表盘页面开关
-		dashboard: true,
+		dashboard: false,
 		// 项目页面开关
-		projects: true,
+		projects: false,
 	},
 
 	// 分类导航栏开关，在首页和归档页顶部显示分类快捷导航

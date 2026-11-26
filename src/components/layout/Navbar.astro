@@ -56,6 +56,13 @@ const allowLayoutSwitch = siteConfig.postListLayout.allowSwitch;
 const hasDisplaySettings =
 	showThemeColor || isWallpaperSwitchable || allowLayoutSwitch;
 
+interface Props {
+	class?: string;
+	hasPublishedPosts: boolean;
+}
+
+const { hasPublishedPosts } = Astro.props;
+
 // 根据 siteConfig.pages 过滤导航栏链接
 const pages = siteConfig.pages;
 
@@ -65,6 +72,7 @@ function isPageEnabled(link: NavBarLink): boolean {
 }
 
 function filterLinks(link: NavBarLink): NavBarLink | null {
+	if (link.requiresPublishedPosts && !hasPublishedPosts) return null;
 	if (!link.children) {
 		return isPageEnabled(link) ? link : null;
 	}
@@ -148,18 +156,17 @@ if (isLocalSrcLogo) {
                 })}
             </div>
             <div class="flex col-start-3 justify-self-end">
-                <!--<SearchPanel client:load>-->
-                <Search
-                    client:load
-                />
+                {hasPublishedPosts && <Search client:load />}
                 {musicPlayerConfig.showInNavbar && (
                     <button aria-label={i18n(I18nKey.music)} class="btn-plain scale-animation rounded-lg h-9 w-9 md:h-11 md:w-11 active:scale-90" id="music-player-switch">
                         <Icon is:inline name="material-symbols:music-note-rounded" class="text-[1.25rem]"></Icon>
                     </button>
                 )}
-                <a href={url('/dashboard/')} aria-label="仪表盘" class="btn-plain scale-animation rounded-lg h-9 w-9 md:h-11 md:w-11 active:scale-90">
-                    <Icon is:inline name="material-symbols:dashboard" class="text-[1.25rem]"></Icon>
-                </a>
+                {pages.dashboard && (
+                    <a href={url('/dashboard/')} aria-label="仪表盘" class="btn-plain scale-animation rounded-lg h-9 w-9 md:h-11 md:w-11 active:scale-90">
+                        <Icon is:inline name="material-symbols:dashboard" class="text-[1.25rem]"></Icon>
+                    </a>
+                )}
                 {backgroundWallpaper.playerEnable && backgroundWallpaper.mode !== "none" && (
                     <button
                         aria-label={i18n(I18nKey.videoPlay)}
@@ -371,7 +378,7 @@ if (document.readyState === 'loading') {
 </script>
 
 {
-    import.meta.env.PROD && (
+    import.meta.env.PROD && hasPublishedPosts && (
         <script is:inline data-swup-ignore-script define:vars={{ scriptUrl: url('/pagefind/pagefind.js') }}>
             {/* 你的 loadPagefind 函数的完整内容放在这里 */}
             async function loadPagefind() {

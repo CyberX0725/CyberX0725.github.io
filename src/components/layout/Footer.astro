@@ -2,8 +2,10 @@
 import fs from "node:fs";
 import path from "node:path";
 import { footerConfig, profileConfig } from "@/config";
+import { hasPublishedOriginalPosts } from "@/utils/content-utils";
 import { url } from "@/utils/url-utils";
 
+const showRss = await hasPublishedOriginalPosts();
 const currentYear = new Date().getFullYear();
 
 // 读取FooterConfig.html文件内容
@@ -44,12 +46,12 @@ if (footerConfig.enable) {
     <div class="m-0.5 flex gap-2 justify-center flex-wrap">
       &copy; <span id="copyright-year">{currentYear}</span>
       {profileConfig.name}. All Rights Reserved.
-      <span aria-hidden="true">/</span>
-      <a
-        class="transition link text-(--primary) font-medium"
-        target="_blank"
-        href={url("rss.xml")}>RSS</a
-      >
+      {showRss && (
+        <>
+          <span aria-hidden="true">/</span>
+          <a class="transition link text-(--primary) font-medium" href={url("/rss.xml")} target="_blank" rel="noopener">RSS</a>
+        </>
+      )}
       <span aria-hidden="true">/</span>
       <a
         class="transition link text-(--primary) font-medium"

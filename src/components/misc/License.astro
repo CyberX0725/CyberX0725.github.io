@@ -9,7 +9,7 @@ import { formatDateToYYYYMMDD } from "@/utils/date-utils";
 interface Props {
 	title: string;
 	id: string;
-	pubDate: Date;
+	pubDate?: Date;
 	class: string;
 	author: string;
 	sourceLink: string;
@@ -66,14 +66,14 @@ const licenseIcon = licenseName
         {author || profileConf.name}
       </div>
     </div>
-    <div>
+    {pubDate && <div>
       <div class="transition text-black/30 dark:text-white/30 text-sm">
         {i18n(I18nKey.publishedAt)}
       </div>
       <div class="transition text-black/75 dark:text-white/75 line-clamp-2">
         {formatDateToYYYYMMDD(pubDate)}
       </div>
-    </div>
+    </div>}
     <div>
       <div class="transition text-black/30 dark:text-white/30 text-sm">
         {i18n(I18nKey.license)}

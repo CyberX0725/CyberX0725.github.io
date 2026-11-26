@@ -1,10 +1,8 @@
 ---
-import MainGridLayout from "@layouts/MainGridLayout.astro";
+import PageStatus from "@/components/common/PageStatus.astro";
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
 ---
 
-<MainGridLayout title="项目展示">
-	<div>
-		<h1>项目展示</h1>
-		<p>项目展示功能开发中...</p>
-	</div>
+<MainGridLayout title="项目">
+	<PageStatus title="项目" message="作品尚未发布。" />
 </MainGridLayout>
