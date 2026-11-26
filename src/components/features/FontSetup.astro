@@ -9,6 +9,7 @@
  * 字体的 fallback 由各字体定义中的 fallbacks 字段控制（Astro Font API 处理），
  */
 import { Font } from "astro:assets";
+import type { ComponentProps } from "astro/types";
 import { fontConfig } from "@/config";
 import { collectUsedFontCssVars } from "@/utils/fontHelper";
 
@@ -54,7 +55,7 @@ const navbarTitleFontVar = fontConfig.enable
 <!-- Astro Font API: 自动下载、缓存并生成优化的 @font-face -->
 {Array.from(allCssVars).map((cssVar) => (
   <Font
-    cssVariable={cssVar as any}
+    cssVariable={cssVar as ComponentProps<typeof Font>["cssVariable"]}
     preload={selectedFontVars.includes(cssVar)}
   />
 ))}

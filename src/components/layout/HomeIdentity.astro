@@ -1,0 +1,70 @@
+---
+import ImageWrapper from "@/components/common/ImageWrapper.astro";
+import { profileConfig } from "@/config";
+import { url } from "@/utils/url-utils";
+
+const github = profileConfig.links.find((link) => link.name === "GitHub");
+---
+
+<div class="home-identity text-center text-white">
+	<div class="home-identity-avatar mx-auto mb-4 overflow-hidden rounded-full">
+		<ImageWrapper src={profileConfig.avatar || ""} alt="" widths={[96, 192]} sizes="(max-width: 640px) 72px, 96px" loading="eager" />
+	</div>
+	<h1 class="home-identity-name font-bold leading-none">{profileConfig.name}</h1>
+	<div class="mt-5 flex flex-wrap justify-center gap-3">
+		<a class="home-identity-link home-identity-primary" href={url("/about/")}>关于我</a>
+		{github && <a class="home-identity-link" href={github.url}>GitHub</a>}
+	</div>
+</div>
+
+<style>
+	.home-identity {
+		width: fit-content;
+		max-width: 100%;
+		margin-inline: auto;
+		padding: clamp(1rem, 4vw, 2rem) clamp(1.4rem, 6vw, 3rem);
+		border: 1px solid rgb(255 255 255 / 24%);
+		border-radius: 1.5rem;
+		background: rgb(9 13 21 / 86%);
+		box-shadow: 0 12px 36px rgb(0 0 0 / 28%);
+	}
+
+	.home-identity-avatar {
+		width: clamp(4.5rem, 14vw, 6rem);
+		aspect-ratio: 1;
+		border: 1px solid rgb(255 255 255 / 45%);
+	}
+
+	.home-identity-name {
+		font-size: clamp(1.8rem, 6vw, 3.3rem);
+		letter-spacing: -0.035em;
+	}
+
+	.home-identity-link {
+		pointer-events: auto;
+		display: inline-flex;
+		min-height: 44px;
+		align-items: center;
+		justify-content: center;
+		padding: 0.5rem 1.1rem;
+		border: 1px solid rgb(255 255 255 / 52%);
+		border-radius: 0.65rem;
+		color: white;
+		font-weight: 600;
+	}
+
+	.home-identity-primary {
+		background: #f8fafc;
+		color: #121a27;
+	}
+
+	.home-identity-link:hover {
+		text-decoration: underline;
+		text-underline-offset: 0.2em;
+	}
+
+	.home-identity-link:focus-visible {
+		outline: 2px solid white;
+		outline-offset: 4px;
+	}
+</style>

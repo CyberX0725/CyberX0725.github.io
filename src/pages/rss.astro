@@ -60,6 +60,7 @@ const recentPosts = posts.slice(0, 6);
                 <Icon is:inline name="material-symbols:article" class="mr-2 text-(--primary)" />
                 {i18n(I18nKey.rssLatestPosts)}
             </h2>
+            {recentPosts.length === 0 && <p class="text-75">暂无原创文章。</p>}
             <div class="space-y-4">
                 {recentPosts.map((post) => (
                     <article class="bg-(--card-bg) rounded-xl p-4 border border-(--line-divider) hover:border-(--primary) transition-all duration-300">

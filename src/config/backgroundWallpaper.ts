@@ -35,8 +35,6 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 		homeText: {
 			enable: true,
 			switchable: true,
-			title: "Welcome to my world",
-			titleSize: "3.8rem",
 		},
 		navbar: {
 			transparentMode: "semi",

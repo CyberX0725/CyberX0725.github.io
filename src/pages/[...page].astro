@@ -19,7 +19,7 @@ const len = page.data.length;
 ---
 
 <MainGridLayout>
-  <PostPage page={page} />
+  {page.total > 0 && <PostPage page={page} />}
   {
     page.total > page.size && (
       <Pagination

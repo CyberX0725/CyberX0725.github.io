@@ -12,11 +12,13 @@ import {
 const getDynamicNavBarConfig = (): NavBarConfig => {
 	const links: NavBarLink[] = [
 		LinkPresets.Home,
+		LinkPresets.About,
 	];
 
 	// 文章及其子菜单
 	links.push({
 		name: "文章",
+		requiresPublishedPosts: true,
 		url: "#",
 		icon: "material-symbols:article",
 		children: [
@@ -69,7 +71,7 @@ export const navBarSearchConfig: NavBarSearchConfig = {
 // ============================================================================
 export const LinkPresets: Record<string, NavBarLink> = {
 	Home: {
-		name: "主页",
+		name: "首页",
 		url: "/",
 		icon: "material-symbols:home",
 	},

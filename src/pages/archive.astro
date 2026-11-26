@@ -2,9 +2,11 @@
 import ArchivePanel from "@components/controls/ArchivePanel.astro";
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
+import PageStatus from "@/components/common/PageStatus.astro";
+import { hasPublishedOriginalPosts } from "@/utils/content-utils";
 import MainGridLayout from "@layouts/MainGridLayout.astro";
 ---
 
 <MainGridLayout title={i18n(I18nKey.archive)}>
-  <ArchivePanel />
+  {await hasPublishedOriginalPosts() ? <ArchivePanel /> : <PageStatus title="归档" message="暂无原创文章。" />}
 </MainGridLayout>

@@ -39,9 +39,11 @@ interface Props {
 	lang?: string;
 	setOGTypeArticle?: boolean;
 	postSlug?: string;
+	noindex?: boolean;
+	hasPublishedPosts?: boolean;
 }
 
-let { title, description, lang, setOGTypeArticle, postSlug } = Astro.props;
+let { title, description, lang, setOGTypeArticle, postSlug, noindex, hasPublishedPosts } = Astro.props;
 
 // apply a class to the body element to decide the height of the banner, only used for initial page load
 // Swup can update the body for each page visit, but it's after the page transition, causing a delay for banner height change
@@ -88,9 +90,10 @@ const siteLang = lang.replace("_", "-");
 ---
 
 <!doctype html>
-<html lang={siteLang} class="bg-(--page-bg) text-[14px] md:text-[16px]" data-wallpaper-mode={backgroundWallpaper.mode}>
+<html lang={siteLang} class="bg-(--page-bg) text-[14px] md:text-[16px]" data-wallpaper-mode={backgroundWallpaper.mode} data-pagefind-ignore={noindex ? "all" : undefined}>
   <head>
     <meta charset="UTF-8" />
+    {noindex && <meta name="robots" content="noindex" />}
     {analyticsConfig?.googleAnalyticsId && (
             <GoogleAnalytics analyticsId={analyticsConfig.googleAnalyticsId} />
     )}
@@ -543,12 +546,9 @@ const siteLang = lang.replace("_", "-");
 
     <slot name="head" />
 
-    <link
-      rel="alternate"
-      type="application/rss+xml"
-      title={profileConfig.name}
-      href={`${Astro.site}rss.xml`}
-    />
+    {hasPublishedPosts && (
+      <link rel="alternate" type="application/rss+xml" title={profileConfig.name} href={url("/rss.xml")} />
+    )}
 
     <!-- Font Setup (Astro Font API) -->
     <FontSetup />

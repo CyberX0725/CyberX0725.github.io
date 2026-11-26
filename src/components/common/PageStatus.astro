@@ -1,0 +1,19 @@
+---
+import { url } from "@/utils/url-utils";
+
+interface Props {
+	title: string;
+	message: string;
+}
+
+const { title, message } = Astro.props;
+---
+
+<section class="card-base rounded-(--radius-large) px-6 py-8 md:px-9">
+	<h1 class="text-3xl font-bold text-90">{title}</h1>
+	<p class="mt-3 text-75">{message}</p>
+	<div class="mt-6 flex flex-wrap gap-3">
+		<a href={url("/")} class="btn-regular rounded-lg px-4 py-2">返回首页</a>
+		<a href={url("/about/")} class="btn-regular rounded-lg px-4 py-2">关于我</a>
+	</div>
+</section>

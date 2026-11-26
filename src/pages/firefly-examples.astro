@@ -1,0 +1,25 @@
+---
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
+import { getFireflyExamples } from "@/utils/content-utils";
+import { getPostUrlBySlug } from "@/utils/url-utils";
+
+const examples = await getFireflyExamples({ includeDrafts: import.meta.env.DEV });
+---
+
+<MainGridLayout title="Firefly 示例" noindex>
+	<section class="card-base rounded-(--radius-large) px-6 py-8 md:px-9">
+		<h1 class="text-3xl font-bold text-90">Firefly 示例</h1>
+		<p class="mt-3 text-75">这里收录本站使用的 Firefly 主题示例和使用指南。</p>
+		<ul class="mt-6 divide-y divide-(--line-divider)">
+			{examples.map((entry) => (
+				<li>
+					<a class="block py-3 text-90 underline-offset-4 hover:underline"
+						href={getPostUrlBySlug(entry.id)}>
+						{entry.data.title}
+						{entry.data.draft && <span class="ml-2 text-sm text-75">草稿</span>}
+					</a>
+				</li>
+			))}
+		</ul>
+	</section>
+</MainGridLayout>

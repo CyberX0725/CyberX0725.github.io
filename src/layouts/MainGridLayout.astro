@@ -11,7 +11,8 @@ import ImageWrapper from "@/components/common/ImageWrapper.astro";
 import FloatingControls from "@/components/controls/FloatingControls.astro";
 import ScrollDownIndicator from "@/components/controls/ScrollDownIndicator.astro";
 import BackgroundPlayer from "@/components/features/BackgroundPlayer.astro";
-import TypewriterText from "@/components/features/TypewriterText.astro";
+import HomeIdentity from "@/components/layout/HomeIdentity.astro";
+import { hasPublishedOriginalPosts } from "@/utils/content-utils";
 import WallpaperPreview from "@/components/features/WallpaperPreview.astro";
 import CategoryBar from "@/components/layout/CategoryBar.astro";
 import {
@@ -50,6 +51,7 @@ interface Props {
 	description?: string;
 	lang?: string;
 	setOGTypeArticle?: boolean;
+	noindex?: boolean;
 	postSlug?: string;
 	postCategory?: string;
 	headings?: MarkdownHeading[];
@@ -73,6 +75,7 @@ const {
 	description,
 	lang,
 	setOGTypeArticle,
+	noindex,
 	postSlug,
 	postCategory,
 	headings = [],
@@ -119,21 +122,11 @@ const shouldRenderGradient =
 // 检查是否为首页
 const isHomePageCheck = isHomePage(Astro.url.pathname);
 
-const shouldRenderCategoryBar = !!siteConfig.categoryBar;
+const hasPublishedPosts = await hasPublishedOriginalPosts();
+const shouldRenderCategoryBar = !!siteConfig.categoryBar && hasPublishedPosts;
 
 // 检查是否在文章详情页
 const isPostPage = !!postSlug;
-
-// 随机选择副标题（当打字机关闭且为数组时）
-const getRandomSubtitle = () => {
-	const subtitle = backgroundWallpaper.common?.homeText?.subtitle;
-	if (Array.isArray(subtitle)) {
-		const randomIndex = Math.floor(Math.random() * subtitle.length);
-		return subtitle[randomIndex];
-	}
-	return subtitle;
-};
-const randomSubtitle = getRandomSubtitle();
 
 // 主页横幅文本只在首页且全局开关为 true 时显示，不区分设备
 const homeTextEnable = backgroundWallpaper.common?.homeText?.enable;
@@ -292,7 +285,7 @@ const hasMultipleImages =
 	backgroundImages.desktop.length > 1 || backgroundImages.mobile.length > 1;
 ---
 
-<Layout title={title} banner={banner} description={description} lang={lang} setOGTypeArticle={setOGTypeArticle} postSlug={postSlug}>
+<Layout title={title} banner={banner} description={description} lang={lang} setOGTypeArticle={setOGTypeArticle} postSlug={postSlug} noindex={noindex} hasPublishedPosts={hasPublishedPosts}>
 
 
 <!-- 为全屏壁纸模式添加body类 -->
@@ -319,7 +312,7 @@ const hasMultipleImages =
             stickyNavbar ? "" : "sticky top-0",
         ]}
     >
-        <Navbar></Navbar>
+        <Navbar hasPublishedPosts={hasPublishedPosts} />
     </div>
 </div>
 
@@ -802,63 +795,12 @@ const hasMultipleImages =
         {showBannerDim && <div class="banner-dim-overlay absolute inset-0" style={`background: rgba(0, 0, 0, ${dimOpacity})`}></div>}
     </div>
 
-    <div id="banner-overlay-container" class="absolute inset-0 z-20 pointer-events-none transition-swup-fade">    <!-- Home page text overlay - 始终渲染以便切换模式时控制显示 -->
-    {homeTextEnable && (
-        <div class={`banner-home-text-overlay absolute inset-0 z-20 flex items-center justify-center ${!showHomeText ? 'hidden' : ''}`}>
-            <div class="w-4/5 lg:w-3/4 text-center mb-0">
-                <div class="flex flex-col">
-                    {backgroundWallpaper.common?.homeText?.title && (
-                        <div class="banner-title font-bold text-white mb-2 lg:mb-4 leading-tight" style={{ '--banner-title-size': backgroundWallpaper.common.homeText.titleSize || "3rem" }}>
-                            {backgroundWallpaper.common.homeText.title}
-                        </div>
-                    )}
-                    {backgroundWallpaper.common?.homeText?.subtitle && (
-                        <div id="banner-subtitle" class="banner-subtitle text-white/90 leading-snug" style={{ fontSize: backgroundWallpaper.common.homeText.subtitleSize || "1.5rem" }} data-subtitles={JSON.stringify(backgroundWallpaper.common.homeText.subtitle)}>
-                            {backgroundWallpaper.common.homeText.typewriter?.enable ? (
-                                <TypewriterText
-                                    text={backgroundWallpaper.common.homeText.subtitle}
-                                    speed={backgroundWallpaper.common.homeText.typewriter.speed}
-                                    deleteSpeed={backgroundWallpaper.common.homeText.typewriter.deleteSpeed}
-                                    pauseTime={backgroundWallpaper.common.homeText.typewriter.pauseTime}
-                                />
-                            ) : (
-                                randomSubtitle
-                            )}
-                        </div>
-                    )}
-                </div>
-            </div>
+    <div id="banner-overlay-container" class="absolute inset-0 z-30 pointer-events-none transition-swup-fade">
+    {isHomePageCheck && homeTextEnable && (
+        <div id="home-identity" class:list={["banner-home-text-overlay absolute inset-0 z-20 flex items-center justify-center", !showHomeText && "hidden"]}>
+            <div><HomeIdentity /></div>
         </div>
     )}
-
-    <script is:inline>
-        function setRandomSubtitle() {
-            const subtitleElement = document.getElementById('banner-subtitle');
-            if (!subtitleElement) return;
-
-            const subtitlesData = subtitleElement.dataset.subtitles;
-            if (!subtitlesData) return;
-
-            try {
-                const subtitles = JSON.parse(subtitlesData);
-                // Only randomize if it's an array and typewriter is NOT enabled (check for typewriter class)
-                if (Array.isArray(subtitles) && subtitles.length > 0 && !subtitleElement.querySelector('.typewriter')) {
-                    // Use a global variable to persist the subtitle across Swup navigations
-                    // This variable will be reset on full page reload (F5), meeting the requirement
-                    if (!window.fireflyCachedSubtitle) {
-                        const randomIndex = Math.floor(Math.random() * subtitles.length);
-                        window.fireflyCachedSubtitle = subtitles[randomIndex];
-                    }
-                    subtitleElement.textContent = window.fireflyCachedSubtitle;
-                }
-            } catch (e) {
-                console.error("Failed to parse subtitles", e);
-            }
-        }
-
-        // Run on initial load
-        setRandomSubtitle();
-    </script>
 
     <!-- Non-home non-post page title overlay (desktop only) -->
     {showBannerPageTitle && (
@@ -1049,6 +991,11 @@ const hasMultipleImages =
                 {/* 为每个页面提供一个隐藏的h1标题，用于SEO和可访问性 */}
                 <h1 class="sr-only">{title}</h1>
                 <div id="content-wrapper" class="onload-animation transition-leaving">
+                    {isHomePageCheck && (
+                        <div class:list={["home-identity-inline mb-4", !homeTextEnable && "home-identity-always-inline"]}>
+                            <HomeIdentity />
+                        </div>
+                    )}
                     <slot></slot>
                 </div>
             </main>
@@ -1122,3 +1069,20 @@ const hasMultipleImages =
 
 </style>
 
+
+<style is:global>
+	.home-identity-inline {
+		display: none;
+	}
+
+	html[data-wallpaper-mode="none"] .home-identity-inline,
+	html[data-wallpaper-mode="overlay"] .home-identity-inline,
+	html[data-banner-title-enabled="false"] .home-identity-inline,
+	.home-identity-inline.home-identity-always-inline {
+		display: block;
+	}
+
+	html[data-banner-title-enabled="false"] #home-identity {
+		display: none !important;
+	}
+</style>
