@@ -11,7 +11,6 @@ import ImageWrapper from "@/components/common/ImageWrapper.astro";
 import FloatingControls from "@/components/controls/FloatingControls.astro";
 import ScrollDownIndicator from "@/components/controls/ScrollDownIndicator.astro";
 import BackgroundPlayer from "@/components/features/BackgroundPlayer.astro";
-import HomeIdentity from "@/components/layout/HomeIdentity.astro";
 import { hasPublishedOriginalPosts } from "@/utils/content-utils";
 import WallpaperPreview from "@/components/features/WallpaperPreview.astro";
 import CategoryBar from "@/components/layout/CategoryBar.astro";
@@ -127,11 +126,6 @@ const shouldRenderCategoryBar = !!siteConfig.categoryBar && hasPublishedPosts;
 
 // 检查是否在文章详情页
 const isPostPage = !!postSlug;
-
-// 主页横幅文本只在首页且全局开关为 true 时显示，不区分设备
-const homeTextEnable = backgroundWallpaper.common?.homeText?.enable;
-const showHomeText =
-	(isBannerMode || isFullscreenMode) && !!homeTextEnable && isHomePageCheck;
 
 const showBannerPostMeta =
 	(isBannerMode || isFullscreenMode) &&
@@ -312,7 +306,7 @@ const hasMultipleImages =
             stickyNavbar ? "" : "sticky top-0",
         ]}
     >
-        <Navbar hasPublishedPosts={hasPublishedPosts} />
+        <Navbar />
     </div>
 </div>
 
@@ -795,13 +789,7 @@ const hasMultipleImages =
         {showBannerDim && <div class="banner-dim-overlay absolute inset-0" style={`background: rgba(0, 0, 0, ${dimOpacity})`}></div>}
     </div>
 
-    <div id="banner-overlay-container" class="absolute inset-0 z-30 pointer-events-none transition-swup-fade">
-    {isHomePageCheck && homeTextEnable && (
-        <div id="home-identity" class:list={["banner-home-text-overlay absolute inset-0 z-20 flex items-center justify-center", !showHomeText && "hidden"]}>
-            <div><HomeIdentity /></div>
-        </div>
-    )}
-
+    <div id="banner-overlay-container" class="absolute inset-0 z-20 pointer-events-none transition-swup-fade">
     <!-- Non-home non-post page title overlay (desktop only) -->
     {showBannerPageTitle && (
         <div class="banner-page-title-overlay absolute inset-0 z-20 hidden lg:flex items-center justify-center pointer-events-none">
@@ -991,11 +979,6 @@ const hasMultipleImages =
                 {/* 为每个页面提供一个隐藏的h1标题，用于SEO和可访问性 */}
                 <h1 class="sr-only">{title}</h1>
                 <div id="content-wrapper" class="onload-animation transition-leaving">
-                    {isHomePageCheck && (
-                        <div class:list={["home-identity-inline mb-4", !homeTextEnable && "home-identity-always-inline"]}>
-                            <HomeIdentity />
-                        </div>
-                    )}
                     <slot></slot>
                 </div>
             </main>
@@ -1067,22 +1050,4 @@ const hasMultipleImages =
     }
   }
 
-</style>
-
-
-<style is:global>
-	.home-identity-inline {
-		display: none;
-	}
-
-	html[data-wallpaper-mode="none"] .home-identity-inline,
-	html[data-wallpaper-mode="overlay"] .home-identity-inline,
-	html[data-banner-title-enabled="false"] .home-identity-inline,
-	.home-identity-inline.home-identity-always-inline {
-		display: block;
-	}
-
-	html[data-banner-title-enabled="false"] #home-identity {
-		display: none !important;
-	}
 </style>
